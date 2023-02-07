@@ -36,6 +36,7 @@ export default function Calculator() {
               placeholder="Enter Price"
               autoFocus
               required
+              inputMode="decimal"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
@@ -50,6 +51,7 @@ export default function Calculator() {
               type="number"
               placeholder="Enter Size"
               required
+              inputMode="decimal"
               value={size}
               onChange={(e) => setSize(e.target.value)}
             />

@@ -72,6 +72,7 @@ export default function AddProduct() {
             placeholder="e.g. 064947130213"
             autoFocus
             required
+            inputMode="numeric"
           />
         </Form.Group>
 
@@ -166,6 +167,7 @@ export default function AddProduct() {
             min="0"
             step=".01"
             required
+            inputMode="decimal"
           />
         </Form.Group>
 
@@ -178,6 +180,7 @@ export default function AddProduct() {
             min="0"
             step=".01"
             required
+            inputMode="decimal"
           />
         </Form.Group>
 
