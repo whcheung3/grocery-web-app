@@ -3,10 +3,9 @@
   "short_name": "Groc$Track",
   "icons": [
     {
-      "src": "/icons/icon-120x120.png",
-      "sizes": "120x120",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "src": "/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
     }
   ],
   "theme_color": "#FFFFFF",

@@ -1,38 +1,35 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# [Current Working] Grocery Price Tracker
 
-## Getting Started
+## Project Overview
 
-First, run the development server:
+Nowadays, the cost of living is keep increasing because of inflation. Watching flyers from every supermarket has become our weekly routine.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+However, the flyer can only tell you which products are on sale. Or which stores are offering a better price in the current week. So, what about the lowest price of a product in recent weeks or months?
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+If I have a systemic way to record the product price history, I can just wait for a better deal to come up and save some money on it.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+And this is my idea of monitoring and finding the lowest prices for groceries.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## APP
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Deployed on Vercel:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+https://grocery-price-tracker.vercel.app/
 
-## Learn More
+## API
 
-To learn more about Next.js, take a look at the following resources:
+Deployed on Cyclic:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+https://grocery-web-api.cyclic.app/
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Upcoming Features
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Search keyword auto fill
+- Line graph
+- Security login
+- To buy list
+- Favorite stores & items
+- Search history
+- Image upload
+- Flyer / Web scraping
+- ...
