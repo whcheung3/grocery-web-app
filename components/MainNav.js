@@ -38,7 +38,6 @@ export default function MainNav(props) {
             }
             aria-controls="offcanvasNavbar-expand-md"
           />
-
           <Navbar.Brand>
             <img
               alt=""
