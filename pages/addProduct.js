@@ -120,7 +120,7 @@ export default function AddProduct() {
           <Form.Label>Store</Form.Label>
           <Form.Select
             {...register("history.store")}
-            value=""
+            defaultValue=""
             aria-label="Select Store"
             required
           >
