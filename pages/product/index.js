@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import Error from "next/error";
-import Image from "next/image";
+// import Image from "next/image";
 import { Table, Container, Row, Col, Pagination } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import ProductDetail from "@/components/ProductDetail";
@@ -72,7 +72,7 @@ export default function Product(props) {
                     ).toLocaleDateString()}
                   </td>
                   <td>
-                    <Image
+                    <img
                       src={product?.image}
                       alt={product?.name}
                       width={100}
