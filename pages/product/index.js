@@ -13,7 +13,7 @@ export default function Product(props) {
   const [clickedId, setClickedId] = useState();
   const { data, error } = useSWR(
     props.searchField
-      ? `${process.env.NEXT_PUBLIC_API_URL}?page=${page}&perPage=${perPage}&category=${props.searchField}`
+      ? `${process.env.NEXT_PUBLIC_API_URL}?page=${page}&perPage=${perPage}&q=${props.searchField}`
       : `${process.env.NEXT_PUBLIC_API_URL}?page=${page}&perPage=${perPage}`
   );
 

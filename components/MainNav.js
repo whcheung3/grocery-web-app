@@ -103,7 +103,7 @@ export default function MainNav(props) {
                   value={searchField}
                   onChange={(e) => setSearchField(e.target.value)}
                   type="search"
-                  placeholder="Search by Name (Case Sensitive)"
+                  placeholder="Search by Name"
                   className="me-2"
                   aria-label="Search"
                 />
