@@ -31,7 +31,7 @@ export default function ProductDetail(props) {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header>
+        <Modal.Header closeButton onClick={props.close}>
           <Modal.Title>
             {data?.brand} {data?.name}
           </Modal.Title>
@@ -42,8 +42,8 @@ export default function ProductDetail(props) {
               <img
                 src={data?.image}
                 alt={data?.name}
-                height={300}
-                width={300}
+                height={250}
+                width={250}
               />
             </Col>
             <Col xs={10} md={6}>
