@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 
 export default function MainNav(props) {
-  // const router = useRouter();
+  const router = useRouter();
   const [searchField, setSearchField] = useState("");
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -19,6 +19,7 @@ export default function MainNav(props) {
     e.preventDefault(); // prevent the browser from automatically submitting the form
     props.setSearchField(searchField); // pass to props
     setIsExpanded(false);
+    router.push("/");
   }
 
   return (
@@ -69,15 +70,29 @@ export default function MainNav(props) {
             <Offcanvas.Body>
               <Nav className="me-auto  my-lg-0" style={{ maxHeight: "100px" }}>
                 <Link href="/" passHref>
-                  <Nav.Link onClick={() => setIsExpanded(false)}>Home</Nav.Link>
+                  <Nav.Link
+                    active={router.pathname === "/"}
+                    disabled={router.pathname === "/"}
+                    onClick={() => setIsExpanded(false)}
+                  >
+                    Home
+                  </Nav.Link>
                 </Link>
                 <Link href="/addProduct" passHref>
-                  <Nav.Link onClick={() => setIsExpanded(false)}>
+                  <Nav.Link
+                    active={router.pathname === "/addProduct"}
+                    disabled={router.pathname === "/addProduct"}
+                    onClick={() => setIsExpanded(false)}
+                  >
                     Add Product
                   </Nav.Link>
                 </Link>
                 <Link href="/calculator" passHref>
-                  <Nav.Link onClick={() => setIsExpanded(false)}>
+                  <Nav.Link
+                    active={router.pathname === "/calculator"}
+                    disabled={router.pathname === "/calculator"}
+                    onClick={() => setIsExpanded(false)}
+                  >
                     Calculator
                   </Nav.Link>
                 </Link>
