@@ -38,16 +38,20 @@ export default function MainNav(props) {
             }
             aria-controls="offcanvasNavbar-expand-md"
           />
-          <Navbar.Brand>
-            <img
-              alt=""
-              src="https://em-content.zobj.net/thumbs/120/apple/325/money-with-wings_1f4b8.png"
-              width="30"
-              height="30"
-              className="d-inline-block align-top"
-            />
-            &nbsp;Grocery Price Tracker
-          </Navbar.Brand>
+
+          {/* act as refresh*/}
+          <Nav.Link href="/">
+            <Navbar.Brand>
+              <img
+                alt=""
+                src="https://em-content.zobj.net/thumbs/120/apple/325/money-with-wings_1f4b8.png"
+                width="30"
+                height="30"
+                className="d-inline-block align-top"
+              />
+              &nbsp;Grocery Price Tracker
+            </Navbar.Brand>
+          </Nav.Link>
 
           <Navbar.Offcanvas
             id="offcanvasNavbar-expand-md"

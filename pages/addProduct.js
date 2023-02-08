@@ -193,14 +193,15 @@ export default function AddProduct() {
           />
         </Form.Group>
       </Row>
-
-      <Button
-        variant="success"
-        type="submit "
-        disabled={Object.keys(errors).length > 0}
-      >
-        Submit
-      </Button>
+      <div className="d-flex justify-content-end">
+        <Button
+          variant="success"
+          type="submit "
+          disabled={Object.keys(errors).length > 0}
+        >
+          Submit
+        </Button>
+      </div>
     </Form>
   );
 }

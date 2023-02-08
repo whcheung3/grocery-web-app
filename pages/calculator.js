@@ -11,7 +11,7 @@ export default function Calculator() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    setResults([...results, `$${(price / size).toFixed(3)} / ${unit}`]);
+    setResults([...results, `$${(price / size).toFixed(5)} / ${unit}`]);
     setShowResults(true);
   }
 
@@ -21,6 +21,11 @@ export default function Calculator() {
     setUnit("");
     setResults([]);
     setShowResults(false);
+  }
+
+  function clear() {
+    setPrice("");
+    setSize("");
   }
 
   return (
@@ -97,6 +102,10 @@ export default function Calculator() {
               Submit
             </Button>
             <div className="vr" />
+            <Button variant="warning" onClick={clear}>
+              Clear
+            </Button>
+            <div className="ms-auto" />
             <Button variant="danger" onClick={reset}>
               Reset
             </Button>

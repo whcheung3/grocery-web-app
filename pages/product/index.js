@@ -1,13 +1,14 @@
 import useSWR from "swr";
 import Error from "next/error";
 // import Image from "next/image";
-import { Table, Container, Row, Col, Pagination } from "react-bootstrap";
+import { Row, Col, Pagination, Spinner } from "react-bootstrap";
 import { useState, useEffect } from "react";
+import ProductCard from "@/components/ProductCard";
 import ProductDetail from "@/components/ProductDetail";
 
 export default function Product(props) {
   var counter = 0;
-  const perPage = 10;
+  const perPage = 12;
   const [page, setPage] = useState(1);
   const [show, setShow] = useState(false);
   const [clickedId, setClickedId] = useState();
@@ -25,87 +26,41 @@ export default function Product(props) {
     page > 1 && setPage(page - 1);
   }
   function nextPage() {
-    perPage < data.length && setPage(page + 1);
+    page < data.length && setPage(page + 1);
   }
 
   if (error) {
     return <Error statusCode={404} />;
   } else if (data == null || data == undefined) {
-    return null;
+    return (
+      <div class="d-flex justify-content-center">
+        <Spinner animation="border" />
+      </div>
+    );
   } else {
     return (
       <>
-        {data.length > 0 ? (
-          <Table responsive hover>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Category</th>
-                <th>Brand</th>
-                <th>Name</th>
-                <th>Size</th>
-                <th>Store</th>
-                <th>Sale Price</th>
-                <th>Valid Date</th>
-                <th>Picture</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((product) => (
-                <tr
-                  onClick={handleShow}
-                  data-id={product.upc}
-                  key={product._id}
-                >
-                  <td>{++counter}</td>
-                  <td>{product?.category.join("</br>")}</td>
-                  <td>{product?.brand}</td>
-                  <td>{product?.name}</td>
-                  <td>{product?.size}</td>
-                  <td>{product?.history[product.history.length - 1]?.store}</td>
-                  <td>
-                    ${product?.history[product.history.length - 1]?.price}
-                  </td>
-                  <td>
-                    {new Date(
-                      product?.history[product.history.length - 1]?.valid_to
-                    ).toLocaleDateString()}
-                  </td>
-                  <td>
-                    <img
-                      src={product?.image}
-                      alt={product?.name}
-                      width={100}
-                      height={100}
-                    />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        ) : (
-          <Container>
-            <Row>
-              <Col>Try searching for something else.</Col>
-            </Row>
-          </Container>
-        )}
+        <Row xs={1} md={2} lg={4} className="g-4">
+          {data?.map((product) => (
+            <Col key={product.upc} data-id={product.upc} onClick={handleShow}>
+              <ProductCard upc={product.upc} />
+            </Col>
+          ))}
+        </Row>
 
         {/* Pagination */}
-        {data.length > perPage && (
-          <>
-            <br />
-            <Row>
-              <Col>
-                <Pagination className="float-end" disabled={data.length <= 0}>
-                  <Pagination.Prev onClick={previousPage} />
-                  <Pagination.Item>{page}</Pagination.Item>
-                  <Pagination.Next onClick={nextPage} />
-                </Pagination>
-              </Col>
-            </Row>
-          </>
-        )}
+        <>
+          <br />
+          <Row>
+            <Col>
+              <Pagination className="float-end" disabled={data.length <= 0}>
+                <Pagination.Prev onClick={previousPage} />
+                <Pagination.Item>{page}</Pagination.Item>
+                <Pagination.Next onClick={nextPage} />
+              </Pagination>
+            </Col>
+          </Row>
+        </>
 
         {/* Modal */}
         <ProductDetail
