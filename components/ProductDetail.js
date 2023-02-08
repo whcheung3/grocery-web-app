@@ -31,10 +31,13 @@ export default function ProductDetail(props) {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton onClick={props.close}>
+        <Modal.Header>
           <Modal.Title>
             {data?.brand} {data?.name}
           </Modal.Title>
+          <Button variant="lgiht" onClick={props.close}>
+            &#x2715;
+          </Button>
         </Modal.Header>
         <Modal.Body>
           <Row>

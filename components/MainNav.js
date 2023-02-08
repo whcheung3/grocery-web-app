@@ -58,7 +58,7 @@ export default function MainNav(props) {
             aria-labelledby="offcanvasNavbarLabel-expand-md"
             placement="start"
           >
-            <Offcanvas.Header closeButton onClick={() => setIsExpanded(false)}>
+            <Offcanvas.Header>
               <Offcanvas.Title id="offcanvasNavbarLabel-expand-md">
                 <img
                   alt=""
@@ -69,6 +69,9 @@ export default function MainNav(props) {
                 />
                 &nbsp;Grocery Price Tracker
               </Offcanvas.Title>
+              <Button variant="lgiht" onClick={() => setIsExpanded(false)}>
+                &#x2715;
+              </Button>
             </Offcanvas.Header>
             <Offcanvas.Body>
               <Nav className="me-auto  my-lg-0" style={{ maxHeight: "100px" }}>

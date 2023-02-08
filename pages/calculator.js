@@ -44,6 +44,8 @@ export default function Calculator() {
               inputMode="decimal"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
+              min="0"
+              step=".01"
             />
           </Col>
         </Form.Group>
@@ -59,6 +61,7 @@ export default function Calculator() {
               inputMode="decimal"
               value={size}
               onChange={(e) => setSize(e.target.value)}
+              min="0"
             />
           </Col>
         </Form.Group>
@@ -83,19 +86,7 @@ export default function Calculator() {
             </Form.Select>
           </Col>
         </Form.Group>
-        <Form.Group as={Row} className="mb-3" controlId="result">
-          <Form.Label column sm={2}>
-            Price per Unit
-          </Form.Label>
-          <Col sm={10}>
-            <Form.Control
-              type="text"
-              placeholder="Result"
-              readOnly
-              value={results.length > 0 ? results[results.length - 1] : ""}
-            />
-          </Col>
-        </Form.Group>
+
         <Col sm={{ span: 10, offset: 2 }}>
           <Stack direction="horizontal" gap={3}>
             <Button variant="success" type="submit">
@@ -116,7 +107,7 @@ export default function Calculator() {
       {showResults && (
         <>
           <hr />
-          <h5>Saved Results</h5>
+          <h5>Price per Unit</h5>
           <ListGroup as="ol" numbered>
             {results.map((result) => (
               <ListGroup.Item as="li" key={result}>
