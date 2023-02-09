@@ -1,6 +1,7 @@
 import useSWRConfig from "swr";
 import Error from "next/error";
 import { Card } from "react-bootstrap";
+import Image from "next/image";
 
 export default function ProductCard(props) {
   const { data, error } = useSWRConfig(
@@ -14,23 +15,36 @@ export default function ProductCard(props) {
   } else {
     return (
       <Card className="text-center h-100">
-        <Card.Img className="align-self-center" src={data?.image} />
         <Card.Body>
+          <Image
+            src={data?.image}
+            alt=""
+            width={150}
+            height={150}
+            objectFit="contain"
+          />
           <Card.Title>
             {data?.brand} {data?.name}
           </Card.Title>
           <Card.Text>
             {data?.category?.join(", ")}
-            {", "}
+            {" - "}
             {data?.size}
-            <hr />
+          </Card.Text>
+          <hr />
+
+          {/* Latest Price History */}
+          <Card.Text>
             <strong>Store: </strong>
             {data?.history[data.history.length - 1]?.store} <br />
+            {/* Sale Price */}
             <strong>Price: </strong>$
             {data?.history[data.history.length - 1]?.price}{" "}
+            {/* Original Price */}
             <small>
               <s>${data?.history[data.history.length - 1]?.was_price}</s>
             </small>
+            {/* Discount Calculation */}
             {" (-"}
             {(
               (1 -

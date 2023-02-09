@@ -8,7 +8,8 @@ import {
 } from "react-bootstrap";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import Image from "next/image";
+import { useState } from "react";
 
 export default function MainNav(props) {
   const router = useRouter();
@@ -42,12 +43,11 @@ export default function MainNav(props) {
           {/* act as refresh*/}
           <Nav.Link href="/">
             <Navbar.Brand>
-              <img
-                alt=""
+              <Image
+                alt="logo"
                 src="https://em-content.zobj.net/thumbs/120/apple/325/money-with-wings_1f4b8.png"
-                width="30"
-                height="30"
-                className="d-inline-block align-top"
+                width={25}
+                height={25}
               />
               &nbsp;Grocery Price Tracker
             </Navbar.Brand>
@@ -60,12 +60,11 @@ export default function MainNav(props) {
           >
             <Offcanvas.Header>
               <Offcanvas.Title id="offcanvasNavbarLabel-expand-md">
-                <img
-                  alt=""
+                <Image
+                  alt="logo"
                   src="https://em-content.zobj.net/thumbs/120/apple/325/money-with-wings_1f4b8.png"
-                  width="30"
-                  height="30"
-                  className="d-inline-block align-top"
+                  width={25}
+                  height={25}
                 />
                 &nbsp;Grocery Price Tracker
               </Offcanvas.Title>

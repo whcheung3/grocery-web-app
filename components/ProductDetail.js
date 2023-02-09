@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import Error from "next/error";
-// import Image from "next/image";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Button, Modal, Row, Col } from "react-bootstrap";
 
@@ -42,15 +42,16 @@ export default function ProductDetail(props) {
         <Modal.Body>
           <Row>
             <Col xs={6} md={4}>
-              <img
+              <Image
                 src={data?.image}
                 alt={data?.name}
-                height={250}
+                height={300}
                 width={250}
+                objectFit="contain"
               />
             </Col>
             <Col xs={10} md={6}>
-              <strong>Universal Product Code: </strong>
+              <strong>UPC: </strong>
               {data?.upc?.substring(0, 1)}&nbsp;
               {data?.upc?.substring(1, 6)}&nbsp;
               {data?.upc?.substring(6, 11)}&nbsp;
