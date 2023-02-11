@@ -19,10 +19,12 @@ export default function ProductCard(props) {
         <Card.Body>
           <Skeleton height={150} />
           <Card.Title>
-            <Skeleton />
+            <Skeleton height={30} />
           </Card.Title>
           <Card.Text>
-            <Skeleton count={4} />
+            <Skeleton />
+            <hr />
+            <Skeleton count={3} />
           </Card.Text>
         </Card.Body>
       </Card>
