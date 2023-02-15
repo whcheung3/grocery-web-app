@@ -18,6 +18,10 @@ module.exports = withPWA({
         protocol: "https",
         hostname: "em-content.zobj.net",
       },
+      {
+        protocol: "https",
+        hostname: "via.placeholder.com",
+      },
     ],
   },
 });

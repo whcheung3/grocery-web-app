@@ -1,68 +1,35 @@
-// const form = document.getElementById("addProductForm");
-// form.addEventListener("submit", async function (e) {
-//   e.preventDefault();
-
-//   const formData = {
-//     upc: form.querySelector('input[name="upc"]').value,
-//     category: form.querySelector('input[name="category"]').value,
-//     brand: form.querySelector('input[name="brand"]').value,
-//     name: form.querySelector('input[name="name"]').value,
-//     size: form.querySelector('input[name="size"]').value,
-//     image: form.querySelector('input[name="image"]').value,
-//     history: {
-//       store: form.querySelector('select[name="store"]').value,
-//       was_price: form.querySelector('input[name="was_price"]').value,
-//       price: form.querySelector('input[name="price"]').value,
-//       valid_to: `${
-//         form.querySelector('input[name="valid_to"]').value
-//       }T18:59:59`,
-//     },
-//   };
-
-//   const response = await fetch(process.env.API_URL, {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify(formData),
-//   });
-
-//   const result = await response.json();
-//   console.log(result);
-// });
-
-import { Button, Form, Row, Col } from "react-bootstrap";
+import { Alert, Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 
 export default function AddProduct() {
   const {
     register,
     handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      upc: "",
-      category: [],
-      brand: "",
-      name: "",
-      size: "",
-      image: "",
-      history: [
-        {
-          store: "",
-          was_price: "",
-          price: "",
-          valid_to: "",
-        },
-      ],
-    },
-  });
+    formState: { isSubmitSuccessful, errors },
+  } = useForm();
 
-  async function submitForm(data) {
-    console.log(data);
+  async function onSubmit(data) {
+    await fetch(process.env.NEXT_PUBLIC_API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
   }
 
   return (
-    <Form onSubmit={handleSubmit(submitForm)}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      {isSubmitSuccessful && (
+        <Alert key={"success"} variant={"success"}>
+          New Product Added!
+        </Alert>
+      )}
+
+      {errors?.root?.server && (
+        <Alert key={"danger"} variant={"danger"}>
+          Add Product Failed!
+        </Alert>
+      )}
+
       <Row className="mb-3">
         <Form.Group as={Col} controlId="upc">
           <Form.Label>Universal Product Code</Form.Label>
@@ -71,7 +38,6 @@ export default function AddProduct() {
             pattern="^\d{12}$"
             placeholder="e.g. 064947130213"
             autoFocus
-            required
             inputMode="numeric"
           />
         </Form.Group>
@@ -79,7 +45,7 @@ export default function AddProduct() {
         <Form.Group as={Col} controlId="category">
           <Form.Label>Category</Form.Label>
           <Form.Control
-            {...register("category")}
+            {...register("category.0")}
             placeholder="e.g. Bread, Food"
             required
           />
@@ -119,7 +85,7 @@ export default function AddProduct() {
         <Form.Group as={Col} xs={4} controlId="store">
           <Form.Label>Store</Form.Label>
           <Form.Select
-            {...register("history.store")}
+            {...register("history.0.store")}
             defaultValue=""
             aria-label="Select Store"
             required
@@ -151,8 +117,7 @@ export default function AddProduct() {
           <Form.Label>Picture</Form.Label>
           <Form.Control
             {...register("image")}
-            placeholder="e.g. https://www.a.com/1.jpg"
-            required
+            placeholder="e.g. https://www.abc.com/1.jpg"
           />
         </Form.Group>
       </Row>
@@ -161,7 +126,7 @@ export default function AddProduct() {
         <Form.Group as={Col} controlId="was_price">
           <Form.Label>Original Price</Form.Label>
           <Form.Control
-            {...register("history.was_price")}
+            {...register("history.0.was_price")}
             type="number"
             placeholder="e.g. 2.99"
             min="0"
@@ -174,7 +139,7 @@ export default function AddProduct() {
         <Form.Group as={Col} controlId="price">
           <Form.Label>Sale Price</Form.Label>
           <Form.Control
-            {...register("history.price")}
+            {...register("history.0.price")}
             type="number"
             placeholder="e.g. 2.48"
             min="0"
@@ -187,7 +152,7 @@ export default function AddProduct() {
         <Form.Group as={Col} controlId="valid_to">
           <Form.Label>Valid Date</Form.Label>
           <Form.Control
-            {...register("history.valid_to")}
+            {...register("history.0.valid_to")}
             type="date"
             required
           />
