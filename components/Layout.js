@@ -5,10 +5,7 @@ import Footer from "./Footer";
 export default function Layout(props) {
   return (
     <>
-      <MainNav
-        searchField={props.searchField}
-        setSearchField={props.setSearchField}
-      />
+      <MainNav />
       <br />
       <Container>{props.children}</Container>
       <br />
