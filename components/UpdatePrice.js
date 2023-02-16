@@ -1,7 +1,7 @@
 import { Alert, Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 
-export default function UpdateProduct(props) {
+export default function UpdatePrice(props) {
   const {
     register,
     handleSubmit,
@@ -64,11 +64,7 @@ export default function UpdateProduct(props) {
 
         <Form.Group as={Col} controlId="valid_to">
           <Form.Label>Valid Date</Form.Label>
-          <Form.Control
-            {...register("valid_to")}
-            type="datetime-local"
-            required
-          />
+          <Form.Control {...register("valid_to")} type="date" required />
         </Form.Group>
       </Row>
 
@@ -99,6 +95,7 @@ export default function UpdateProduct(props) {
           />
         </Form.Group>
       </Row>
+      <hr />
       <div className="d-flex justify-content-end">
         <Button
           variant="success"

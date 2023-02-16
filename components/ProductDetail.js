@@ -3,7 +3,7 @@ import Error from "next/error";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Button, Modal, Row, Col, CloseButton } from "react-bootstrap";
-import UpdateProduct from "@/components/UpdateProduct";
+import UpdatePrice from "@/components/UpdatePrice";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 
@@ -46,7 +46,7 @@ export default function ProductDetail(props) {
         <CloseButton onClick={props.close} />
       </Modal.Header>
 
-      <Tabs defaultActiveKey="info" className="mb-3" justify>
+      <Tabs defaultActiveKey="info" className="mb-3 text-nowrap" justify>
         <Tab eventKey="info" title="Information">
           <Modal.Body>
             <Row>
@@ -55,16 +55,17 @@ export default function ProductDetail(props) {
                   src={
                     data?.image
                       ? data?.image
-                      : `https://via.placeholder.com/250`
+                      : `https://via.placeholder.com/200`
                   }
                   alt={data?.name}
-                  height={300}
-                  width={250}
+                  height={200}
+                  width={200}
                   objectFit="contain"
                 />
               </Col>
               <Col>
-                <strong>UPC: </strong>
+                <strong>UPC:</strong>
+                <br />
                 {data?.upc
                   ? data?.upc?.substring(0, 1) +
                     " " +
@@ -75,26 +76,16 @@ export default function ProductDetail(props) {
                     data?.upc?.substring(11, 12)
                   : "N/A"}
                 <br />
-                <strong>Category: </strong>
+                <strong>Category:</strong>
+                <br />
                 {data?.category?.join(", ")}
                 <br />
-                <strong>Size: </strong>
+                <strong>Size:</strong>
+                <br />
                 {data?.size}
                 <br />
-                <br />
-                <strong>Price History: </strong>
-                {data?.history?.map((hist) => (
-                  <div key={hist._id}>
-                    <strong>Store: </strong>
-                    {hist?.store} <br />
-                    <strong>Original Price: </strong>${hist?.was_price} <br />
-                    <strong>Price: </strong>${hist?.price} <br />
-                    <strong>Valid To: </strong>
-                    {new Date(hist?.valid_to).toLocaleDateString()}
-                  </div>
-                ))}
-                <br />
-                <strong>Lowest Price: </strong>${lowest}
+                <strong>Lowest Price:</strong>
+                <br />${lowest}
               </Col>
             </Row>
           </Modal.Body>
@@ -104,9 +95,39 @@ export default function ProductDetail(props) {
             </Button>
           </Modal.Footer>
         </Tab>
-        <Tab eventKey="update" title="Add New Price History">
+        <Tab eventKey="history" title="Price History">
           <Modal.Body>
-            <UpdateProduct id={props.clickedId} />
+            {data?.history?.map((hist) => (
+              <div key={hist._id}>
+                <strong>Store: </strong>
+                {hist?.store} <br />
+                {/* Original Price */}
+                <strong>Original Price: </strong>${hist?.was_price} <br />
+                {/* Sale Price */}
+                <strong>Sale Price: </strong>${hist?.price} <br />
+                {/* Discount Calculation */}
+                <strong>Save: </strong>$
+                {(hist?.was_price - hist?.price).toFixed(2)}
+                {" (-"}
+                {((1 - hist?.price / hist?.was_price) * 100).toFixed(0)}
+                {"%)"}
+                <br />
+                <strong>Valid To: </strong>
+                {new Date(hist?.valid_to).toLocaleDateString()}
+                <br />
+                <br />
+              </div>
+            ))}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="danger" onClick={props.close}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Tab>
+        <Tab eventKey="update" title="Report New Price">
+          <Modal.Body>
+            <UpdatePrice id={props.clickedId} />
           </Modal.Body>
         </Tab>
       </Tabs>

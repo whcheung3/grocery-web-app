@@ -55,28 +55,12 @@ export default function ProductCard(props) {
 
         {/* Latest Price History */}
         <Card.Text>
-          <strong>Store: </strong>
           {data?.history[data.history.length - 1]?.store} <br />
-          {/* Sale Price */}
-          <strong>Price: </strong>$
-          {data?.history[data.history.length - 1]?.price} {/* Original Price */}
-          <small>
-            <s>${data?.history[data.history.length - 1]?.was_price}</s>
-          </small>
-          {/* Discount Calculation */}
-          {" (-"}
-          {(
-            (1 -
-              data?.history[data.history.length - 1]?.price /
-                data?.history[data.history.length - 1]?.was_price) *
-            100
-          ).toFixed(0)}
-          {"%)"}
-          <br />
-          <strong>Valid To: </strong>
+          {/* Sale Price */}${data?.history[data.history.length - 1]?.price}
+          <br /> {"Ends "}
           {new Date(
             data?.history[data.history.length - 1]?.valid_to
-          ).toLocaleDateString()}
+          ).toLocaleDateString("en-CA", { day: "numeric", month: "short" })}
         </Card.Text>
       </Card.Body>
     </Card>

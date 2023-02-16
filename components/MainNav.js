@@ -18,7 +18,7 @@ export default function MainNav() {
     <>
       <Navbar
         expanded={isExpanded}
-        bg="info"
+        bg="primary"
         variant="dark"
         expand="md"
         className="text-nowrap"
