@@ -2,11 +2,8 @@ import "@/styles/bootstrap.min.css";
 import Head from "next/head";
 import Layout from "@/components/Layout";
 import { SWRConfig } from "swr";
-import { useState } from "react";
 
 export default function App({ Component, pageProps }) {
-  const [searchField, setSearchField] = useState(""); // declare high-level "searchField" state
-
   return (
     <>
       <Head>
@@ -200,7 +197,7 @@ export default function App({ Component, pageProps }) {
         <link rel="manifest" href="/manifest.json" />
         <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
-      <Layout searchField={searchField} setSearchField={setSearchField}>
+      <Layout>
         <SWRConfig
           value={{
             fetcher: async (url) => {
@@ -221,11 +218,7 @@ export default function App({ Component, pageProps }) {
             },
           }}
         >
-          <Component
-            {...pageProps}
-            searchField={searchField}
-            setSearchField={setSearchField}
-          />
+          <Component {...pageProps} />
         </SWRConfig>
       </Layout>
     </>

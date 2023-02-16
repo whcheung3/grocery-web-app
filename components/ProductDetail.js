@@ -9,9 +9,7 @@ import Tabs from "react-bootstrap/Tabs";
 
 export default function ProductDetail(props) {
   const { data, error } = useSWR(
-    props.clickedId
-      ? `${process.env.NEXT_PUBLIC_API_URL}/${props.clickedId}`
-      : null
+    props.id ? `${process.env.NEXT_PUBLIC_API_URL}/${props.id}` : null
   );
   const [lowest, setLowest] = useState();
 
