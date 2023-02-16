@@ -2,26 +2,17 @@ import {
   Nav,
   Navbar,
   Container,
-  Form,
-  Button,
   Offcanvas,
+  CloseButton,
 } from "react-bootstrap";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { useState } from "react";
 
-export default function MainNav(props) {
+export default function MainNav() {
   const router = useRouter();
-  const [searchField, setSearchField] = useState("");
   const [isExpanded, setIsExpanded] = useState(false);
-
-  async function submitForm(e) {
-    e.preventDefault(); // prevent the browser from automatically submitting the form
-    props.setSearchField(searchField); // pass to props
-    setIsExpanded(false);
-    router.push("/");
-  }
 
   return (
     <>
@@ -30,7 +21,7 @@ export default function MainNav(props) {
         bg="info"
         variant="dark"
         expand="md"
-        className="mb-3 text-nowrap"
+        className="text-nowrap"
       >
         <Container>
           <Navbar.Toggle
@@ -39,7 +30,6 @@ export default function MainNav(props) {
             }
             aria-controls="offcanvasNavbar-expand-md"
           />
-
           {/* act as refresh*/}
           <Nav.Link href="/">
             <Navbar.Brand>
@@ -52,7 +42,6 @@ export default function MainNav(props) {
               &nbsp;Grocery Price Tracker
             </Navbar.Brand>
           </Nav.Link>
-
           <Navbar.Offcanvas
             id="offcanvasNavbar-expand-md"
             aria-labelledby="offcanvasNavbarLabel-expand-md"
@@ -68,9 +57,7 @@ export default function MainNav(props) {
                 />
                 &nbsp;Grocery Price Tracker
               </Offcanvas.Title>
-              <Button variant="lgiht" onClick={() => setIsExpanded(false)}>
-                &#x2715;
-              </Button>
+              <CloseButton onClick={() => setIsExpanded(false)} />
             </Offcanvas.Header>
             <Offcanvas.Body>
               <Nav className="me-auto  my-lg-0" style={{ maxHeight: "100px" }}>
@@ -83,15 +70,17 @@ export default function MainNav(props) {
                     Home
                   </Nav.Link>
                 </Link>
-                <Link href="/addProduct" passHref>
+
+                <Link href="/add" passHref>
                   <Nav.Link
-                    active={router.pathname === "/addProduct"}
-                    disabled={router.pathname === "/addProduct"}
+                    active={router.pathname === "/add"}
+                    disabled={router.pathname === "/add"}
                     onClick={() => setIsExpanded(false)}
                   >
                     Add Product
                   </Nav.Link>
                 </Link>
+
                 <Link href="/calculator" passHref>
                   <Nav.Link
                     active={router.pathname === "/calculator"}
@@ -102,21 +91,6 @@ export default function MainNav(props) {
                   </Nav.Link>
                 </Link>
               </Nav>
-              &nbsp;
-              <hr />
-              <Form className="d-flex" onSubmit={submitForm}>
-                <Form.Control
-                  value={searchField}
-                  onChange={(e) => setSearchField(e.target.value)}
-                  type="search"
-                  placeholder="Search by Name"
-                  className="me-2"
-                  aria-label="Search"
-                />
-                <Button type="submit" variant="success">
-                  Search
-                </Button>
-              </Form>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
         </Container>
