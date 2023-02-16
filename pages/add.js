@@ -9,6 +9,7 @@ export default function AddProduct() {
   } = useForm();
 
   async function onSubmit(data) {
+    data.history[0].valid_to += "T23:59:59Z"; // make date until day end
     await fetch(process.env.NEXT_PUBLIC_API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

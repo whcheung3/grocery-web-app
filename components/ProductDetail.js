@@ -125,7 +125,7 @@ export default function ProductDetail(props) {
         </Tab>
         <Tab eventKey="update" title="Report New Price">
           <Modal.Body>
-            <UpdatePrice id={props.clickedId} />
+            <UpdatePrice id={props.id} />
           </Modal.Body>
         </Tab>
       </Tabs>
