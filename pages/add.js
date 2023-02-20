@@ -10,6 +10,7 @@ export default function AddProduct() {
 
   async function onSubmit(data) {
     data.history[0].valid_to += "T23:59:59Z"; // make date until day end
+
     await fetch(process.env.NEXT_PUBLIC_API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -71,19 +72,47 @@ export default function AddProduct() {
             required
           />
         </Form.Group>
+      </Row>
 
+      <Row className="mb-3">
         <Form.Group as={Col} controlId="size">
           <Form.Label>Size</Form.Label>
           <Form.Control
             {...register("size")}
-            placeholder="e.g. 675g"
+            type="number"
+            min="0"
+            step=".01"
+            placeholder="e.g. 675"
             required
+            inputMode="decimal"
           />
+        </Form.Group>
+
+        <Form.Group as={Col} controlId="unit">
+          <Form.Label>Unit</Form.Label>
+
+          <Form.Select
+            {...register("unit")}
+            defaultValue=""
+            aria-label="Select Unit"
+            required
+          >
+            <option value="" disabled hidden>
+              Select Unit
+            </option>
+            <option value="ea">ea</option>
+            <option value="pc">pc</option>
+            <option value="g">g</option>
+            <option value="kg">kg</option>
+            <option value="lb">lb</option>
+            <option value="ml">ml</option>
+            <option value="l">l</option>
+          </Form.Select>
         </Form.Group>
       </Row>
 
       <Row className="mb-3">
-        <Form.Group as={Col} xs={4} controlId="store">
+        <Form.Group as={Col} controlId="store">
           <Form.Label>Store</Form.Label>
           <Form.Select
             {...register("history.0.store")}
@@ -118,25 +147,13 @@ export default function AddProduct() {
           <Form.Label>Picture</Form.Label>
           <Form.Control
             {...register("image")}
-            placeholder="e.g. https://www.abc.com/1.jpg"
+            type="file"
+            accept="image/png, image/jpeg, image/jpg"
           />
         </Form.Group>
       </Row>
 
       <Row className="mb-3">
-        <Form.Group as={Col} controlId="was_price">
-          <Form.Label>Original Price</Form.Label>
-          <Form.Control
-            {...register("history.0.was_price")}
-            type="number"
-            placeholder="e.g. 2.99"
-            min="0"
-            step=".01"
-            required
-            inputMode="decimal"
-          />
-        </Form.Group>
-
         <Form.Group as={Col} controlId="price">
           <Form.Label>Sale Price</Form.Label>
           <Form.Control

@@ -22,6 +22,12 @@ module.exports = withPWA({
         protocol: "https",
         hostname: "via.placeholder.com",
       },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        port: "",
+        pathname: "/whcheung3/image/upload/**",
+      },
     ],
   },
 });

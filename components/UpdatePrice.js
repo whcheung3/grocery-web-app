@@ -10,7 +10,7 @@ export default function UpdatePrice(props) {
 
   async function onSubmit(data) {
     data.valid_to += "T23:59:59Z"; // make date until day end
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${props.id}`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${props.id}/add`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

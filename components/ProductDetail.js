@@ -81,6 +81,7 @@ export default function ProductDetail(props) {
                 <strong>Size:</strong>
                 <br />
                 {data?.size}
+                {data?.unit}
                 <br />
                 <strong>Lowest Price:</strong>
                 <br />${lowest}
@@ -99,16 +100,16 @@ export default function ProductDetail(props) {
               <div key={hist._id}>
                 <strong>Store: </strong>
                 {hist?.store} <br />
-                {/* Original Price */}
-                <strong>Original Price: </strong>${hist?.was_price} <br />
                 {/* Sale Price */}
-                <strong>Sale Price: </strong>${hist?.price} <br />
-                {/* Discount Calculation */}
-                <strong>Save: </strong>$
-                {(hist?.was_price - hist?.price).toFixed(2)}
-                {" (-"}
-                {((1 - hist?.price / hist?.was_price) * 100).toFixed(0)}
-                {"%)"}
+                <strong>Sale Price: </strong>
+                {"$"}
+                {hist?.price} <br />
+                {/* Per Unit Calculation */}
+                <strong>Price Per Unit: </strong>
+                {"$"}
+                {((hist?.price / data?.size) * 100).toFixed(2)}
+                {" / 100"}
+                {data?.unit}
                 <br />
                 <strong>Valid To: </strong>
                 {new Date(hist?.valid_to).toLocaleDateString()}

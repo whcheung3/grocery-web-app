@@ -50,6 +50,7 @@ export default function ProductCard(props) {
           {data?.category?.join(", ")}
           {" - "}
           {data?.size}
+          {data?.unit}
         </Card.Text>
         <hr />
 

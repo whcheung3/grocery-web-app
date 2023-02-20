@@ -39,18 +39,6 @@ export default function Product() {
       </div>
     );
   }
-  if (data.length == 0) {
-    return (
-      <>
-        <SearchBar
-          searchField={searchField}
-          setSearchField={setSearchField}
-          setPage={setPage}
-        />
-        No Result
-      </>
-    );
-  }
   return (
     <>
       {/* Search Bar */}
@@ -60,29 +48,39 @@ export default function Product() {
         setPage={setPage}
       />
 
-      {/* Card */}
-      <Row xs={1} md={2} lg={4} className="g-4">
-        {data?.map((product) => (
-          <Col key={product._id} id={product._id} onClick={handleShow}>
-            <ProductCard id={product._id} />
-          </Col>
-        ))}
-      </Row>
+      {data.length == 0 ? (
+        "No Product Found"
+      ) : (
+        <>
+          {/* Card */}
+          <Row xs={1} md={2} lg={4} className="g-4">
+            {data?.map((product) => (
+              <Col key={product._id} id={product._id} onClick={handleShow}>
+                <ProductCard id={product._id} />
+              </Col>
+            ))}
+          </Row>
 
-      {/* Pagination */}
-      <br />
-      <Row>
-        <Col>
-          <Pagination className="float-end">
-            <Pagination.Prev onClick={previousPage} />
-            <Pagination.Item>{page}</Pagination.Item>
-            <Pagination.Next onClick={nextPage} />
-          </Pagination>
-        </Col>
-      </Row>
+          {/* Pagination */}
+          <br />
+          <Row>
+            <Col>
+              <Pagination className="float-end">
+                <Pagination.Prev onClick={previousPage} />
+                <Pagination.Item>{page}</Pagination.Item>
+                <Pagination.Next onClick={nextPage} />
+              </Pagination>
+            </Col>
+          </Row>
 
-      {/* Modal */}
-      <ProductDetail id={clickedId} show={show} close={() => setShow(false)} />
+          {/* Modal */}
+          <ProductDetail
+            id={clickedId}
+            show={show}
+            close={() => setShow(false)}
+          />
+        </>
+      )}
     </>
   );
 }
