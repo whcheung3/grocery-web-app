@@ -2,16 +2,24 @@ import useSWR from "swr";
 import Error from "next/error";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { Button, Modal, Row, Col, CloseButton } from "react-bootstrap";
+import {
+  Button,
+  Modal,
+  Row,
+  Col,
+  CloseButton,
+  Tab,
+  Tabs,
+  Alert,
+} from "react-bootstrap";
 import UpdatePrice from "@/components/UpdatePrice";
-import Tab from "react-bootstrap/Tab";
-import Tabs from "react-bootstrap/Tabs";
 
 export default function ProductDetail(props) {
   const { data, error } = useSWR(
     props.id ? `${process.env.NEXT_PUBLIC_API_URL}/${props.id}` : null
   );
   const [lowest, setLowest] = useState();
+  const [isDeleted, setIsDeleted] = useState(false);
 
   useEffect(() => {
     if (data) {
@@ -20,6 +28,24 @@ export default function ProductDetail(props) {
       setLowest(Math.min(...temp));
     }
   }, [data]);
+
+  async function deleteHistory(historyId) {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/${props.id}/delete/${historyId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: `{ "_id": "${historyId}" }`,
+      }
+    );
+    if (response.ok) {
+      setIsDeleted(true);
+    } else {
+      console.error("Unable to delete history");
+    }
+  }
 
   if (error) {
     return <Error statusCode={404} />;
@@ -96,26 +122,50 @@ export default function ProductDetail(props) {
         </Tab>
         <Tab eventKey="history" title="Price History">
           <Modal.Body>
+            {isDeleted && (
+              <Alert key={"success"} variant={"success"}>
+                History Deleted!
+              </Alert>
+            )}
             {data?.history?.map((hist) => (
-              <div key={hist._id}>
-                <strong>Store: </strong>
-                {hist?.store} <br />
-                {/* Sale Price */}
-                <strong>Sale Price: </strong>
-                {"$"}
-                {hist?.price} <br />
-                {/* Per Unit Calculation */}
-                <strong>Price Per Unit: </strong>
-                {"$"}
-                {((hist?.price / data?.size) * 100).toFixed(2)}
-                {" / 100"}
-                {data?.unit}
+              <>
+                <Row>
+                  <Col>
+                    <div>
+                      <strong>Store: </strong>
+                      {hist?.store} <br />
+                      {/* Sale Price */}
+                      <strong>Sale Price: </strong>
+                      {"$"}
+                      {hist?.price} <br />
+                      {/* Per Unit Calculation */}
+                      <strong>Price Per Unit: </strong>
+                      {"$"}
+                      {((hist?.price / data?.size) * 100).toFixed(2)}
+                      {" / 100"}
+                      {data?.unit}
+                      <br />
+                      <strong>Valid To: </strong>
+                      {new Date(hist?.valid_to).toLocaleDateString()}
+                      <br />
+                    </div>
+                  </Col>
+                  <Col>
+                    <Button
+                      className="float-end"
+                      variant="danger"
+                      size="sm"
+                      id={hist._id}
+                      onClick={(e) =>
+                        deleteHistory(e.currentTarget.getAttribute("id"))
+                      }
+                    >
+                      &times;
+                    </Button>
+                  </Col>
+                </Row>
                 <br />
-                <strong>Valid To: </strong>
-                {new Date(hist?.valid_to).toLocaleDateString()}
-                <br />
-                <br />
-              </div>
+              </>
             ))}
           </Modal.Body>
           <Modal.Footer>

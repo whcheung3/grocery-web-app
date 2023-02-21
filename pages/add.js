@@ -1,5 +1,6 @@
 import { Alert, Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 export default function AddProduct() {
   const {
@@ -7,9 +8,34 @@ export default function AddProduct() {
     handleSubmit,
     formState: { isSubmitSuccessful, errors },
   } = useForm();
+  const [image, setImage] = useState(null);
 
   async function onSubmit(data) {
     data.history[0].valid_to += "T23:59:59Z"; // make date until day end
+
+    if (image) {
+      // upload image to Cloudinary
+      const imageData = new FormData();
+      imageData.append("file", image);
+      imageData.append(
+        "upload_preset",
+        process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
+      );
+
+      await fetch(
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+        {
+          method: "POST",
+          body: imageData,
+        }
+      )
+        .then((response) => response.json())
+        .then((image) => {
+          data.image = image.url;
+        }); // set product image url
+    } else {
+      data.image = "";
+    }
 
     await fetch(process.env.NEXT_PUBLIC_API_URL, {
       method: "POST",
@@ -149,6 +175,7 @@ export default function AddProduct() {
             {...register("image")}
             type="file"
             accept="image/png, image/jpeg, image/jpg"
+            onChange={(e) => setImage(e.target.files[0])}
           />
         </Form.Group>
       </Row>

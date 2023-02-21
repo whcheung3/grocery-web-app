@@ -62,7 +62,9 @@ export default function UpdatePrice(props) {
             </optgroup>
           </Form.Select>
         </Form.Group>
+      </Row>
 
+      <Row className="mb-3">
         <Form.Group as={Col} controlId="valid_to">
           <Form.Label>Valid Date</Form.Label>
           <Form.Control {...register("valid_to")} type="date" required />
@@ -70,19 +72,6 @@ export default function UpdatePrice(props) {
       </Row>
 
       <Row className="mb-3">
-        <Form.Group as={Col} controlId="was_price">
-          <Form.Label>Original Price</Form.Label>
-          <Form.Control
-            {...register("was_price")}
-            type="number"
-            placeholder="e.g. 2.99"
-            min="0"
-            step=".01"
-            inputMode="decimal"
-            required
-          />
-        </Form.Group>
-
         <Form.Group as={Col} controlId="price">
           <Form.Label>Sale Price</Form.Label>
           <Form.Control
@@ -96,6 +85,7 @@ export default function UpdatePrice(props) {
           />
         </Form.Group>
       </Row>
+
       <hr />
       <div className="d-flex justify-content-end">
         <Button

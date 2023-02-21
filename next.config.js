@@ -8,14 +8,6 @@ module.exports = withPWA({
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "www.tntsupermarket.com",
-      },
-      {
-        protocol: "https",
-        hostname: "assets.shop.loblaws.ca",
-      },
-      {
-        protocol: "https",
         hostname: "em-content.zobj.net",
       },
       {
@@ -23,9 +15,7 @@ module.exports = withPWA({
         hostname: "via.placeholder.com",
       },
       {
-        protocol: "https",
         hostname: "res.cloudinary.com",
-        port: "",
         pathname: "/whcheung3/image/upload/**",
       },
     ],
