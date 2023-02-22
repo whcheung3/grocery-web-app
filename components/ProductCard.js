@@ -17,16 +17,15 @@ export default function ProductCard(props) {
   if (!data) {
     return (
       // Skeleton Screen
-      <Card>
+      <Card className="text-center h-100">
         <Card.Body>
-          <Skeleton height={150} />
-          <Card.Title>
-            <Skeleton height={30} />
-          </Card.Title>
-          <Card.Text>
-            <Skeleton />
-            <Skeleton count={3} />
-          </Card.Text>
+          <Skeleton height={150} width={150} />
+          <Skeleton height={25} width={100} />
+          <Skeleton height={15} width={80} />
+          <hr />
+          <Skeleton height={15} width={70} />
+          <Skeleton height={15} width={100} />
+          <Skeleton height={15} width={60} />
         </Card.Body>
       </Card>
     );
@@ -58,7 +57,17 @@ export default function ProductCard(props) {
         <Card.Text>
           {data?.history[data.history.length - 1]?.store} <br />
           {/* Sale Price */}${data?.history[data.history.length - 1]?.price}
-          <br /> {"Ends "}
+          {" ("}
+          {/* Per Unit Calculation */}
+          {"$"}
+          {(data?.history[data.history.length - 1]?.price / data?.size).toFixed(
+            5
+          )}
+          {" / "}
+          {data?.unit}
+          {")"}
+          <br />
+          {"Ends "}
           {new Date(
             data?.history[data.history.length - 1]?.valid_to
           ).toLocaleDateString("en-CA", { day: "numeric", month: "short" })}

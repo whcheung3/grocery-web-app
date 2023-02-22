@@ -86,7 +86,6 @@ export default function UpdatePrice(props) {
         </Form.Group>
       </Row>
 
-      <hr />
       <div className="d-flex justify-content-end">
         <Button
           variant="success"

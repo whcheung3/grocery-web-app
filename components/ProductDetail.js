@@ -13,6 +13,7 @@ import {
   Alert,
 } from "react-bootstrap";
 import UpdatePrice from "@/components/UpdatePrice";
+import UpdateProduct from "@/components/UpdateProduct";
 
 export default function ProductDetail(props) {
   const { data, error } = useSWR(
@@ -20,6 +21,7 @@ export default function ProductDetail(props) {
   );
   const [lowest, setLowest] = useState();
   const [isDeleted, setIsDeleted] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     if (data) {
@@ -33,7 +35,7 @@ export default function ProductDetail(props) {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/${props.id}/delete/${historyId}`,
       {
-        method: "PUT",
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
@@ -44,6 +46,20 @@ export default function ProductDetail(props) {
       setIsDeleted(true);
     } else {
       console.error("Unable to delete history");
+    }
+  }
+
+  async function deleteProduct() {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/${props.id}`,
+      {
+        method: "DELETE",
+      }
+    );
+    if (response.ok) {
+      setIsDeleted(true);
+    } else {
+      console.error("Unable to delete product");
     }
   }
 
@@ -70,9 +86,15 @@ export default function ProductDetail(props) {
         <CloseButton onClick={props.close} />
       </Modal.Header>
 
+      {/* Information*/}
       <Tabs defaultActiveKey="info" className="mb-3 text-nowrap" justify>
         <Tab eventKey="info" title="Information">
           <Modal.Body>
+            {isDeleted && (
+              <Alert key={"success"} variant={"success"}>
+                Product Deleted!
+              </Alert>
+            )}
             <Row>
               <Col className="d-flex justify-content-center">
                 <Image
@@ -114,12 +136,9 @@ export default function ProductDetail(props) {
               </Col>
             </Row>
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="danger" onClick={props.close}>
-              Close
-            </Button>
-          </Modal.Footer>
         </Tab>
+
+        {/* Price History */}
         <Tab eventKey="history" title="Price History">
           <Modal.Body>
             {isDeleted && (
@@ -128,55 +147,57 @@ export default function ProductDetail(props) {
               </Alert>
             )}
             {data?.history?.map((hist) => (
-              <>
-                <Row>
-                  <Col>
-                    <div>
-                      <strong>Store: </strong>
-                      {hist?.store} <br />
-                      {/* Sale Price */}
-                      <strong>Sale Price: </strong>
-                      {"$"}
-                      {hist?.price} <br />
-                      {/* Per Unit Calculation */}
-                      <strong>Price Per Unit: </strong>
-                      {"$"}
-                      {((hist?.price / data?.size) * 100).toFixed(2)}
-                      {" / 100"}
-                      {data?.unit}
-                      <br />
-                      <strong>Valid To: </strong>
-                      {new Date(hist?.valid_to).toLocaleDateString()}
-                      <br />
-                    </div>
-                  </Col>
-                  <Col>
-                    <Button
-                      className="float-end"
-                      variant="danger"
-                      size="sm"
-                      id={hist._id}
-                      onClick={(e) =>
-                        deleteHistory(e.currentTarget.getAttribute("id"))
-                      }
-                    >
-                      &times;
-                    </Button>
-                  </Col>
-                </Row>
-                <br />
-              </>
+              <Row key={hist._id}>
+                <Col>
+                  <strong>Store: </strong>
+                  <br />
+                  {hist?.store} <br />
+                  <strong>Sale Price: </strong>
+                  <br />
+                  {"$"}
+                  {hist?.price} <br />
+                  {/* Per Unit Calculation */}
+                  <strong>Price Per Unit: </strong>
+                  <br />
+                  {"$"}
+                  {(hist?.price / data?.size).toFixed(5)}
+                  {" / "}
+                  {data?.unit}
+                  <br />
+                  <strong>Valid To: </strong>
+                  <br />
+                  {new Date(hist?.valid_to).toLocaleDateString()}
+                  <br /> <br />
+                </Col>
+                <Col>
+                  <Button
+                    className="float-end"
+                    variant="danger"
+                    size="sm"
+                    id={hist._id}
+                    onClick={(e) =>
+                      deleteHistory(e.currentTarget.getAttribute("id"))
+                    }
+                  >
+                    &times;
+                  </Button>
+                </Col>
+              </Row>
             ))}
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="danger" onClick={props.close}>
-              Close
-            </Button>
-          </Modal.Footer>
         </Tab>
-        <Tab eventKey="update" title="Report New Price">
+
+        {/* Report New Price */}
+        <Tab eventKey="report" title="Report Price">
           <Modal.Body>
             <UpdatePrice id={props.id} />
+          </Modal.Body>
+        </Tab>
+
+        {/* Modify */}
+        <Tab eventKey="update" title="Update Product">
+          <Modal.Body>
+            <UpdateProduct id={props.id} />
           </Modal.Body>
         </Tab>
       </Tabs>
