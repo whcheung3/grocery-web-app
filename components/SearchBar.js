@@ -19,7 +19,7 @@ export default function SearchBar(props) {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         type="search"
-        placeholder="Search by Name"
+        placeholder="Search by Name / Brand / UPC / Category"
         aria-label="Search"
       />
       <div className="vr ms-2 me-1" />

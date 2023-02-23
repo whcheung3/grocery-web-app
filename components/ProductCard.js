@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import Error from "next/error";
 import { Card } from "react-bootstrap";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -9,6 +10,15 @@ export default function ProductCard(props) {
   const { data, error } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/${props.id}`
   );
+  const [lowest, setLowest] = useState();
+
+  useEffect(() => {
+    if (data) {
+      let temp = [];
+      data?.history?.map((i) => temp.push(i.price));
+      setLowest(Math.min(...temp));
+    }
+  }, [data]);
 
   if (error) {
     return <Error statusCode={404} />;
@@ -42,31 +52,56 @@ export default function ProductCard(props) {
           objectFit="contain"
         />
 
-        <Card.Title>
-          {data?.brand} {data?.name}
-        </Card.Title>
+        <Card.Title>{data?.brand + " " + data?.name}</Card.Title>
         <Card.Text>
-          {data?.category?.join(", ")}
-          {" - "}
-          {data?.size}
-          {data?.unit}
+          {data?.category?.join(", ") + " - " + data?.size + data?.unit}
         </Card.Text>
+
+        {/* Lowest Price History */}
         <hr />
+        <Card.Text>
+          {"Lowest: "}
+          <br />
+
+          {/* Sale Price */}
+          {"$" + lowest}
+          <br />
+
+          {/* Per Unit Calculation: multiply 100 if unit is g / ml */}
+          {data?.unit == "g" || data?.unit == "ml" ? (
+            <>
+              {` ($${((lowest / data?.size) * 100).toFixed(2)} / 100${
+                data?.unit
+              })`}
+            </>
+          ) : (
+            <>{` ($${(lowest / data?.size).toFixed(2)} / ${data?.unit})`}</>
+          )}
+        </Card.Text>
 
         {/* Latest Price History */}
+        <hr />
         <Card.Text>
-          {data?.history[data.history.length - 1]?.store} <br />
-          {/* Sale Price */}${data?.history[data.history.length - 1]?.price}
-          {" ("}
-          {/* Per Unit Calculation */}
-          {"$"}
-          {(data?.history[data.history.length - 1]?.price / data?.size).toFixed(
-            5
-          )}
-          {" / "}
-          {data?.unit}
-          {")"}
+          {/* Store Name */}
+          {data?.history[data.history.length - 1]?.store}
           <br />
+
+          {/* Sale Price */}
+          {"$" + data?.history[data.history.length - 1]?.price.toFixed(2)}
+
+          {/* Per Unit Calculation: multiply 100 if unit is g / ml */}
+          {data?.unit == "g" || data?.unit == "ml" ? (
+            <>
+              {` ($${((lowest / data?.size) * 100).toFixed(2)} / 100${
+                data?.unit
+              })`}
+            </>
+          ) : (
+            <>{` ($${(lowest / data?.size).toFixed(2)} / ${data?.unit})`}</>
+          )}
+          <br />
+
+          {/* Valid To */}
           {"Ends "}
           {new Date(
             data?.history[data.history.length - 1]?.valid_to

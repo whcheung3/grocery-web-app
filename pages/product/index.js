@@ -49,7 +49,7 @@ export default function Product() {
       />
 
       {data.length == 0 ? (
-        "No Product Found"
+        "No Results Found"
       ) : (
         <>
           {/* Card */}
