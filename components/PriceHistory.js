@@ -1,34 +1,23 @@
-import { useState, useEffect } from "react";
-import { Button, Row, Col, Alert } from "react-bootstrap";
+import { useState } from "react";
+import { Button, Row, Col } from "react-bootstrap";
+import ConfirmDelete from "@/components/ConfirmDelete";
 
 export default function PriceHistory(props) {
-  const [isDeleted, setIsDeleted] = useState(false);
-  const [isError, setIsError] = useState(false);
-
-  async function deleteHistory(historyId) {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/${props.id}/delete/${historyId}`,
-      {
-        method: "DELETE",
-      }
-    );
-    response.ok ? setIsDeleted(true) : setIsError(true);
-  }
+  const [show, setShow] = useState(false);
+  const [clickedHistoryId, setClickedHistoryId] = useState();
 
   return (
     <>
-      {/* Message */}
-      {isDeleted && (
-        <Alert key={"success"} variant={"success"}>
-          History Deleted!
-        </Alert>
-      )}
-      {isError && (
-        <Alert key={"danger"} variant={"danger"}>
-          Unable to Delete History!
-        </Alert>
-      )}
+      {/* Modal */}
+      <ConfirmDelete
+        show={show}
+        close={() => setShow(false)}
+        id={props.id}
+        historyId={clickedHistoryId}
+        target={"history"}
+      />
 
+      {/* History */}
       {props.data?.history?.map((hist) => (
         <Row key={hist._id}>
           <Col>
@@ -71,7 +60,10 @@ export default function PriceHistory(props) {
               variant="danger"
               size="sm"
               id={hist._id}
-              onClick={(e) => deleteHistory(e.currentTarget.getAttribute("id"))}
+              onClick={() => {
+                setClickedHistoryId(hist._id);
+                setShow(true);
+              }}
             >
               &times;
             </Button>

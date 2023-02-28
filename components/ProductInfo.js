@@ -28,8 +28,7 @@ export default function ProductInfo(props) {
           objectFit="contain"
         />
       </Col>
-
-      <Col>
+      <Col className="align-self-center">
         <strong>UPC:</strong>
         <br />
         {props.data?.upc
@@ -42,35 +41,14 @@ export default function ProductInfo(props) {
             props.data?.upc?.substring(11, 12)
           : "N/A"}
         <br />
-
         <strong>Category:</strong>
         <br />
         {props.data?.category?.join(", ")}
         <br />
-
         <strong>Size:</strong>
         <br />
         {props.data?.size + props.data?.unit}
         <br />
-
-        <strong>Lowest Price:</strong>
-        <br />
-        {"$" + lowest}
-
-        {/* multiply 100 if unit is g / ml */}
-        {props.data?.unit == "g" || props.data?.unit == "ml" ? (
-          <>
-            {` ($${((lowest / props.data?.size) * 100).toFixed(2)} / 100${
-              props.data?.unit
-            })`}
-          </>
-        ) : (
-          <>
-            {` ($${(lowest / props.data?.size).toFixed(2)} / ${
-              props.data?.unit
-            })`}
-          </>
-        )}
       </Col>
     </Row>
   );

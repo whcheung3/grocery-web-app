@@ -1,43 +1,32 @@
-import { Alert, Button, Form, Row, Col } from "react-bootstrap";
+import { Button, Form, Row, Col } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import ConfirmDelete from "@/components/ConfirmDelete";
 
 export default function UpdateProduct(props) {
-  const [isDeleted, setIsDeleted] = useState(false);
-  const [isError, setIsError] = useState(false);
-
-  async function deleteProduct() {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/${props.id}`,
-      {
-        method: "DELETE",
-      }
-    );
-    response.ok ? setIsDeleted(true) : setIsError(true);
-  }
+  const [show, setShow] = useState(false);
 
   return (
     <>
-      {/* Message */}
-      {isDeleted && (
-        <Alert key={"success"} variant={"success"}>
-          History Deleted!
-        </Alert>
-      )}
-      {isError && (
-        <Alert key={"danger"} variant={"danger"}>
-          Unable to Delete History!
-        </Alert>
-      )}
+      {/* Modal */}
+      <ConfirmDelete
+        show={show}
+        close={() => setShow(false)}
+        id={props.id}
+        target={"product"}
+      />
 
       <Row>
-        <Form></Form>
+        <Form>Coming Soon...</Form>
         <Col>
           <Button
             className="float-end"
             variant="danger"
             size="sm"
-            onClick={deleteProduct}
+            id={props.id}
+            onClick={() => {
+              setShow(true);
+            }}
           >
             Delete Product
           </Button>

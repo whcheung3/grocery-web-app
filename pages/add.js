@@ -1,13 +1,10 @@
-import { Alert, Button, Form, Row, Col } from "react-bootstrap";
+import { Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function AddProduct() {
-  const {
-    register,
-    handleSubmit,
-    formState: { isSubmitSuccessful, errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
   const [image, setImage] = useState(null);
 
   async function onSubmit(data) {
@@ -37,27 +34,27 @@ export default function AddProduct() {
       data.image = "";
     }
 
-    await fetch(process.env.NEXT_PUBLIC_API_URL, {
+    const response = await fetch(process.env.NEXT_PUBLIC_API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
+
+    if (response.ok) {
+      toast.success("New Product Added!", {
+        position: "top-center",
+        autoClose: 5000,
+      });
+    } else {
+      toast.error("Product Add Fail!", {
+        position: "top-center",
+        autoClose: 5000,
+      });
+    }
   }
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      {isSubmitSuccessful && (
-        <Alert key={"success"} variant={"success"}>
-          New Product Added!
-        </Alert>
-      )}
-
-      {errors?.root?.server && (
-        <Alert key={"danger"} variant={"danger"}>
-          Add Product Failed!
-        </Alert>
-      )}
-
       <Row className="mb-3">
         <Form.Group as={Col} controlId="upc">
           <Form.Label>Universal Product Code</Form.Label>
@@ -204,11 +201,7 @@ export default function AddProduct() {
         </Form.Group>
       </Row>
       <div className="d-flex justify-content-end">
-        <Button
-          variant="success"
-          type="submit "
-          disabled={Object.keys(errors).length > 0}
-        >
+        <Button variant="success" type="submit ">
           Submit
         </Button>
       </div>

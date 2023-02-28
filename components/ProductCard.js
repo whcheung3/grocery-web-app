@@ -10,15 +10,19 @@ export default function ProductCard(props) {
   const { data, error } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/${props.id}`
   );
-  const [lowest, setLowest] = useState();
+  const [lowestPrice, setLowestPrice] = useState(99999);
+  const [lowestDate, setLowestDate] = useState();
 
   useEffect(() => {
     if (data) {
-      let temp = [];
-      data?.history?.map((i) => temp.push(i.price));
-      setLowest(Math.min(...temp));
+      data?.history?.map((hist) => {
+        if (hist.price < lowestPrice) {
+          setLowestPrice(hist.price);
+          setLowestDate(hist.valid_to);
+        }
+      });
     }
-  }, [data]);
+  }, [data, lowestPrice, lowestDate]);
 
   if (error) {
     return <Error statusCode={404} />;
@@ -60,52 +64,33 @@ export default function ProductCard(props) {
         {/* Lowest Price History */}
         <hr />
         <Card.Text>
-          {"Lowest: "}
+          {`Lowest in:
+            ${new Date(
+              new Date(lowestDate).getTime() - 6 * 24 * 60 * 60 * 1000
+            ).toLocaleDateString("en-CA", {
+              day: "numeric",
+              month: "short",
+            })} - 
+            ${new Date(lowestDate).toLocaleDateString("en-CA", {
+              day: "numeric",
+              month: "short",
+            })}`}
           <br />
 
           {/* Sale Price */}
-          {"$" + lowest}
-          <br />
-
+          {"$" + lowestPrice?.toFixed(2)}
           {/* Per Unit Calculation: multiply 100 if unit is g / ml */}
           {data?.unit == "g" || data?.unit == "ml" ? (
             <>
-              {` ($${((lowest / data?.size) * 100).toFixed(2)} / 100${
+              {` ($${((lowestPrice / data?.size) * 100).toFixed(2)} / 100${
                 data?.unit
               })`}
             </>
           ) : (
-            <>{` ($${(lowest / data?.size).toFixed(2)} / ${data?.unit})`}</>
+            <>{` ($${(lowestPrice / data?.size).toFixed(2)} / ${
+              data?.unit
+            })`}</>
           )}
-        </Card.Text>
-
-        {/* Latest Price History */}
-        <hr />
-        <Card.Text>
-          {/* Store Name */}
-          {data?.history[data.history.length - 1]?.store}
-          <br />
-
-          {/* Sale Price */}
-          {"$" + data?.history[data.history.length - 1]?.price.toFixed(2)}
-
-          {/* Per Unit Calculation: multiply 100 if unit is g / ml */}
-          {data?.unit == "g" || data?.unit == "ml" ? (
-            <>
-              {` ($${((lowest / data?.size) * 100).toFixed(2)} / 100${
-                data?.unit
-              })`}
-            </>
-          ) : (
-            <>{` ($${(lowest / data?.size).toFixed(2)} / ${data?.unit})`}</>
-          )}
-          <br />
-
-          {/* Valid To */}
-          {"Ends "}
-          {new Date(
-            data?.history[data.history.length - 1]?.valid_to
-          ).toLocaleDateString("en-CA", { day: "numeric", month: "short" })}
         </Card.Text>
       </Card.Body>
     </Card>

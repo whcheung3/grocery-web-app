@@ -1,36 +1,37 @@
-import { Alert, Button, Form, Row, Col } from "react-bootstrap";
+import { Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 export default function UpdatePrice(props) {
-  const {
-    register,
-    handleSubmit,
-    formState: { isSubmitSuccessful, errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
   async function onSubmit(data) {
     data.valid_to += "T23:59:59Z"; // make date until day end
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${props.id}/add`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/${props.id}/add`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      }
+    );
+
+    if (response.ok) {
+      toast.success("Product Updated!", {
+        position: "top-center",
+        autoClose: 5000,
+      });
+    } else {
+      toast.error("Product Update Fail!", {
+        position: "top-center",
+        autoClose: 5000,
+      });
+    }
   }
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      {isSubmitSuccessful && (
-        <Alert key={"success"} variant={"success"}>
-          Product Updated!
-        </Alert>
-      )}
-
-      {errors?.root?.server && (
-        <Alert key={"danger"} variant={"danger"}>
-          Update Product Failed!
-        </Alert>
-      )}
-
       <Row className="mb-3">
         <Form.Group as={Col} controlId="store">
           <Form.Label>Store</Form.Label>
@@ -87,12 +88,8 @@ export default function UpdatePrice(props) {
       </Row>
 
       <div className="d-flex justify-content-end">
-        <Button
-          variant="success"
-          type="submit "
-          disabled={Object.keys(errors).length > 0}
-        >
-          Update
+        <Button variant="success" type="submit ">
+          Submit
         </Button>
       </div>
     </Form>
