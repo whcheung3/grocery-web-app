@@ -23,7 +23,6 @@ export default function UpdateProduct(props) {
             className="float-end"
             variant="danger"
             size="sm"
-            id={props.id}
             onClick={() => {
               setShow(true);
             }}

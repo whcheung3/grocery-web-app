@@ -13,6 +13,22 @@ export default function ProductCard(props) {
   const [lowestPrice, setLowestPrice] = useState(99999);
   const [lowestDate, setLowestDate] = useState();
 
+  function perUnitSwitch(unit, size, price) {
+    // keep the same unit for easier compare
+    switch (unit) {
+      case "ml":
+        return ` ($${((price / size) * 100).toFixed(2)} / 100ml)`;
+      case "g":
+        return ` ($${((price / size) * 100).toFixed(2)} / 100g)`;
+      case "kg":
+        return ` ($${(price / size / 10).toFixed(2)} / 100g)`;
+      case "l":
+        return ` ($${(price / size / 10).toFixed(2)} / 100ml)`;
+      default:
+        return ` ($${(price / size).toFixed(2)} / ${unit})`;
+    }
+  }
+
   useEffect(() => {
     if (data) {
       data?.history?.map((hist) => {
@@ -79,18 +95,9 @@ export default function ProductCard(props) {
 
           {/* Sale Price */}
           {"$" + lowestPrice?.toFixed(2)}
-          {/* Per Unit Calculation: multiply 100 if unit is g / ml */}
-          {data?.unit == "g" || data?.unit == "ml" ? (
-            <>
-              {` ($${((lowestPrice / data?.size) * 100).toFixed(2)} / 100${
-                data?.unit
-              })`}
-            </>
-          ) : (
-            <>{` ($${(lowestPrice / data?.size).toFixed(2)} / ${
-              data?.unit
-            })`}</>
-          )}
+
+          {/* Per Unit Calculation */}
+          {perUnitSwitch(data?.unit, data?.size, lowestPrice)}
         </Card.Text>
       </Card.Body>
     </Card>
