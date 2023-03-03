@@ -152,9 +152,10 @@ export default function AddProduct() {
               <option value="Winco Food Mart">Winco Food Mart</option>
             </optgroup>
             <optgroup label="Western Supermarket">
+              <option value="Costco">Costco</option>
               <option value="Food Basics">Food Basics</option>
               <option value="FreshCO">FreshCO</option>
-              <option value="Longos">Longos</option>
+              <option value="Loblaws">Loblaws</option>
               <option value="Metro">Metro</option>
               <option value="No Frills">No Frills</option>
               <option value="Real Canadian Superstore">
@@ -162,6 +163,9 @@ export default function AddProduct() {
               </option>
               <option value="Shoppers Drug Mart">Shoppers Drug Mart</option>
               <option value="Walmart">Walmart</option>
+            </optgroup>
+            <optgroup label="Other">
+              <option value="Other">Other</option>
             </optgroup>
           </Form.Select>
         </Form.Group>

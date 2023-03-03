@@ -11,7 +11,7 @@ export default function Calculator() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    setResults([...results, `$${(price / size).toFixed(5)} / ${unit}`]);
+    setResults([...results, `$${(price / size).toFixed(4)} / ${unit}`]);
     setShowResults(true);
   }
 

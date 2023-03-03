@@ -27,7 +27,7 @@ export default function ConfirmDelete(props) {
   return (
     <Modal size="sm" show={props.show} onHide={props.close} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Confirmation</Modal.Title>
+        <Modal.Title>Delete</Modal.Title>
       </Modal.Header>
       <Modal.Body>Are you confirm to delete?</Modal.Body>
       <Modal.Footer>

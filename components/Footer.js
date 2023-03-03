@@ -3,7 +3,7 @@ export default function Footer() {
     <>
       <br />
       <small className="d-flex justify-content-center">
-        Sam Cheung &copy; 2023
+        Sam Cheung &copy; {new Date().getFullYear()}
       </small>
       <br />
     </>

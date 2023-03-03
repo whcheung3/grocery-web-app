@@ -11,15 +11,15 @@ export default function PriceHistory(props) {
     // keep the same unit for easier compare
     switch (unit) {
       case "ml":
-        return `$${((price / size) * 100).toFixed(2)} / 100ml`;
+        return `$${((price / size) * 100).toFixed(4)} / 100ml`;
       case "g":
-        return `$${((price / size) * 100).toFixed(2)} / 100g`;
+        return `$${((price / size) * 100).toFixed(4)} / 100g`;
       case "kg":
-        return `$${(price / size / 10).toFixed(2)} / 100g`;
+        return `$${(price / size / 10).toFixed(4)} / 100g`;
       case "l":
-        return `$${(price / size / 10).toFixed(2)} / 100ml`;
+        return `$${(price / size / 10).toFixed(4)} / 100ml`;
       default:
-        return `$${(price / size).toFixed(2)} / ${unit}`;
+        return `$${(price / size).toFixed(4)} / ${unit}`;
     }
   }
 

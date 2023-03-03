@@ -25,7 +25,7 @@ export default function ProductDetail(props) {
       show={props.show}
       onHide={props.close}
       aria-labelledby="contained-modal-title-vcenter"
-      centered
+      fullscreen="md-down"
     >
       <Modal.Header>
         <Modal.Title>{data?.brand + " " + data?.name}</Modal.Title>
