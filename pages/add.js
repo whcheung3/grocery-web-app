@@ -4,10 +4,18 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 
 export default function AddProduct() {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting, isSubmitSuccessful },
+  } = useForm();
   const [image, setImage] = useState(null);
 
   async function onSubmit(data) {
+    const loadingToast = toast.loading("Submitting...", {
+      position: "top-center",
+    });
+
     data.history[0].valid_to += "T23:59:59Z"; // make date until day end
 
     if (image) {
@@ -28,7 +36,7 @@ export default function AddProduct() {
       )
         .then((response) => response.json())
         .then((image) => {
-          data.image = image.url;
+          data.image = "https" + image.url.slice(4);
         }); // set product image url
     } else {
       data.image = "";
@@ -41,11 +49,13 @@ export default function AddProduct() {
     });
 
     if (response.ok) {
+      toast.dismiss(loadingToast);
       toast.success("New Product Added!", {
         position: "top-center",
         autoClose: 5000,
       });
     } else {
+      toast.dismiss(loadingToast);
       toast.error("Product Add Fail!", {
         position: "top-center",
         autoClose: 5000,
@@ -205,7 +215,7 @@ export default function AddProduct() {
         </Form.Group>
       </Row>
       <div className="d-flex justify-content-end">
-        <Button variant="success" type="submit ">
+        <Button variant="success" type="submit" disabled={isSubmitting}>
           Submit
         </Button>
       </div>
