@@ -15,6 +15,7 @@ module.exports = withPWA({
         hostname: "via.placeholder.com",
       },
       {
+        protocol: "https",
         hostname: "res.cloudinary.com",
         pathname: "/whcheung3/image/upload/**",
       },

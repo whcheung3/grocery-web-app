@@ -6,16 +6,22 @@ import { toast } from "react-toastify";
 export default function AddProduct() {
   const {
     register,
+    watch,
+    setValue,
     handleSubmit,
     formState: { isSubmitting, isSubmitSuccessful },
   } = useForm();
   const [image, setImage] = useState(null);
+  const isNoUpc = watch("noUpc");
+  const isMultipack = watch("multipack");
 
   async function onSubmit(data) {
     const loadingToast = toast.loading("Submitting...", {
       position: "top-center",
     });
 
+    if (data.pack) data.size *= data.pack; // sum up the total size of the product
+    data.category = data.category.replace(/\s*,\s*/gi, ",").split(","); // remove whitespace and make categories in an array
     data.history[0].valid_to += "T23:59:59Z"; // make date until day end
 
     if (image) {
@@ -46,16 +52,14 @@ export default function AddProduct() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
-    });
+    }).then(toast.dismiss(loadingToast));
 
     if (response.ok) {
-      toast.dismiss(loadingToast);
       toast.success("New Product Added!", {
         position: "top-center",
         autoClose: 5000,
       });
     } else {
-      toast.dismiss(loadingToast);
       toast.error("Product Add Fail!", {
         position: "top-center",
         autoClose: 5000,
@@ -68,20 +72,29 @@ export default function AddProduct() {
       <Row className="mb-3">
         <Form.Group as={Col} controlId="upc">
           <Form.Label>Universal Product Code</Form.Label>
+          <Form.Check
+            {...register("noUpc")}
+            label={"No UPC?"}
+            onClick={() => setValue("upc", "")}
+          />
           <Form.Control
             {...register("upc")}
             pattern="^\d{12}$"
             placeholder="e.g. 064947130213"
             autoFocus
             inputMode="numeric"
+            required
+            disabled={isNoUpc}
           />
         </Form.Group>
+      </Row>
 
+      <Row className="mb-3">
         <Form.Group as={Col} controlId="category">
-          <Form.Label>Category</Form.Label>
+          <Form.Label>Category(s)</Form.Label>
           <Form.Control
-            {...register("category.0")}
-            placeholder="e.g. Bread, Food"
+            {...register("category")}
+            placeholder="e.g. Bread, Food (seperate with ' , ')"
             required
           />
         </Form.Group>
@@ -140,7 +153,38 @@ export default function AddProduct() {
             <option value="lb">lb</option>
             <option value="ml">ml</option>
             <option value="l">l</option>
+            <option value="oz">oz</option>
           </Form.Select>
+        </Form.Group>
+
+        <Form.Group as={Col} controlId="pack">
+          <Form.Check
+            className="mb-2"
+            {...register("multipack")}
+            label={"Multipack?"}
+            onClick={() => setValue("pack", "")}
+          />
+          <Form.Control
+            {...register("pack")}
+            type="number"
+            min="0"
+            placeholder="e.g. 6"
+            required
+            inputMode="decimal"
+            disabled={!isMultipack}
+          />
+        </Form.Group>
+      </Row>
+
+      <Row className="mb-3">
+        <Form.Group as={Col} controlId="image">
+          <Form.Label>Picture</Form.Label>
+          <Form.Control
+            {...register("image")}
+            type="file"
+            accept="image/png, image/jpeg, image/jpg"
+            onChange={(e) => setImage(e.target.files[0])}
+          />
         </Form.Group>
       </Row>
 
@@ -180,18 +224,6 @@ export default function AddProduct() {
           </Form.Select>
         </Form.Group>
 
-        <Form.Group as={Col} controlId="image">
-          <Form.Label>Picture</Form.Label>
-          <Form.Control
-            {...register("image")}
-            type="file"
-            accept="image/png, image/jpeg, image/jpg"
-            onChange={(e) => setImage(e.target.files[0])}
-          />
-        </Form.Group>
-      </Row>
-
-      <Row className="mb-3">
         <Form.Group as={Col} controlId="price">
           <Form.Label>Sale Price</Form.Label>
           <Form.Control
@@ -204,7 +236,8 @@ export default function AddProduct() {
             inputMode="decimal"
           />
         </Form.Group>
-
+      </Row>
+      <Row className="mb-3">
         <Form.Group as={Col} controlId="valid_to">
           <Form.Label>Valid Date</Form.Label>
           <Form.Control
