@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import Error from "next/error";
-import { Modal, CloseButton, Tab, Tabs } from "react-bootstrap";
+import { Modal, CloseButton, Tab, Tabs, Row, Col } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import ProductInfo from "@/components/ProductInfo";
 import PriceHistory from "@/components/PriceHistory";
 import UpdatePrice from "@/components/UpdatePrice";
@@ -20,47 +21,59 @@ export default function ProductDetail(props) {
   }
 
   return (
-    <Modal
-      size="lg"
-      show={props.show}
-      onHide={props.close}
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header>
-        <Modal.Title>{data?.brand + " " + data?.name}</Modal.Title>
-        <CloseButton onClick={props.close} />
-      </Modal.Header>
+    // <Modal
+    //   size="lg"
+    //   show={props.show}
+    //   onHide={props.close}
+    //   aria-labelledby="contained-modal-title-vcenter"
+    //   centered
+    // >
+    <Card>
+      <Card.Header>
+        <Row className="mt-2">
+          <Col>
+            <Card.Title>{data?.brand + " " + data?.name}</Card.Title>
+          </Col>
+          <Col>
+            <CloseButton
+              className="float-end"
+              variant="white"
+              onClick={props.close}
+            />
+          </Col>
+        </Row>
+      </Card.Header>
 
       <Tabs defaultActiveKey="info" className="mb-3 text-nowrap" justify>
         {/* Information*/}
         <Tab eventKey="info" title="Information">
-          <Modal.Body>
+          <Card.Body>
             <ProductInfo data={data} />
-          </Modal.Body>
+          </Card.Body>
         </Tab>
 
         {/* Price History */}
         <Tab eventKey="history" title="Price History">
-          <Modal.Body>
+          <Card.Body>
             <PriceHistory id={props.id} data={data} />
-          </Modal.Body>
+          </Card.Body>
         </Tab>
 
         {/* Report Price */}
         <Tab eventKey="report" title="Report Price">
-          <Modal.Body>
+          <Card.Body>
             <UpdatePrice id={props.id} />
-          </Modal.Body>
+          </Card.Body>
         </Tab>
 
         {/* Update Product */}
         <Tab eventKey="update" title="Update Product">
-          <Modal.Body>
+          <Card.Body>
             <UpdateProduct id={props.id} />
-          </Modal.Body>
+          </Card.Body>
         </Tab>
       </Tabs>
-    </Modal>
+      {/* </Modal> */}
+    </Card>
   );
 }

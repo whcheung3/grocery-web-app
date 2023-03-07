@@ -42,7 +42,7 @@ export default function PriceHistory(props) {
       {/* History */}
       {props.data?.history?.map((hist) => (
         <Row key={hist._id}>
-          <Col>
+          <Col className="text-nowrap">
             <strong>Store: </strong>
             <br />
             {hist?.store}

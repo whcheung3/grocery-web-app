@@ -80,24 +80,24 @@ export default function ProductCard(props) {
         {/* Lowest Price History */}
         <hr />
         <Card.Text>
-          {`Lowest in:
-            ${new Date(
+          {"Lowest: " +
+            new Date(lowestDate).toLocaleDateString("en-CA", {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            })}
+          {/*  ${new Date(
               new Date(lowestDate).getTime() - 6 * 24 * 60 * 60 * 1000
             ).toLocaleDateString("en-CA", {
               day: "numeric",
               month: "short",
-            })} - 
-            ${new Date(lowestDate).toLocaleDateString("en-CA", {
-              day: "numeric",
-              month: "short",
-            })}`}
+            })} - */}
           <br />
 
           {/* Sale Price */}
-          {"$" + lowestPrice?.toFixed(2)}
-
+          <strong>{"$" + lowestPrice?.toFixed(2)}</strong>
           {/* Per Unit Calculation */}
-          {perUnitSwitch(data?.unit, data?.size, lowestPrice)}
+          <small>{perUnitSwitch(data?.unit, data?.size, lowestPrice)}</small>
         </Card.Text>
       </Card.Body>
     </Card>

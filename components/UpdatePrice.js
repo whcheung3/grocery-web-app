@@ -1,8 +1,10 @@
 import { Button, Form, Row, Col } from "react-bootstrap";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 export default function UpdatePrice(props) {
+  const router = useRouter();
   const { register, handleSubmit } = useForm();
 
   async function onSubmit(data) {
@@ -22,6 +24,7 @@ export default function UpdatePrice(props) {
         position: "top-center",
         autoClose: 5000,
       });
+      router.push("/");
     } else {
       toast.error("Product Update Fail!", {
         position: "top-center",

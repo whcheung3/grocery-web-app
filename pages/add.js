@@ -1,15 +1,17 @@
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 
 export default function AddProduct() {
+  const router = useRouter();
   const {
     register,
     watch,
     setValue,
     handleSubmit,
-    formState: { isSubmitting, isSubmitSuccessful },
+    formState: { isSubmitting },
   } = useForm();
   const [image, setImage] = useState(null);
   const isNoUpc = watch("noUpc");
@@ -59,6 +61,7 @@ export default function AddProduct() {
         position: "top-center",
         autoClose: 5000,
       });
+      router.push("/");
     } else {
       toast.error("Product Add Fail!", {
         position: "top-center",

@@ -81,7 +81,8 @@
   --bs-border-radius-xl: 1rem;
   --bs-border-radius-2xl: 2rem;
   --bs-border-radius-pill: 50rem;
-  --bs-link-color: #18bc9c;
+  /* --bs-link-color: #18bc9c; */
+  --bs-link-color: #999;
   --bs-link-hover-color: #13967d;
   --bs-code-color: #e83e8c;
   --bs-highlight-bg: #fdebd0;
@@ -3572,7 +3573,8 @@ fieldset:disabled .btn {
   cursor: default;
 }
 .nav-tabs {
-  --bs-nav-tabs-border-width: 1px;
+  background-color: var(--bs-card-cap-bg);
+  /* --bs-nav-tabs-border-width: 1px; */
   --bs-nav-tabs-border-color: #ecf0f1;
   --bs-nav-tabs-border-radius: 0.375rem;
   --bs-nav-tabs-link-hover-border-color: #ecf0f1 #ecf0f1 #ecf0f1;
@@ -4141,7 +4143,7 @@ fieldset:disabled .btn {
   margin-bottom: 0;
   color: var(--bs-card-cap-color);
   background-color: var(--bs-card-cap-bg);
-  border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);
+  /* border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color); */
 }
 .card-header:first-child {
   border-radius: var(--bs-card-inner-border-radius)

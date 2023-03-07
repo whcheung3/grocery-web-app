@@ -1,12 +1,15 @@
 import useSWR from "swr";
 import Error from "next/error";
+import { useRouter } from "next/router";
 import { Row, Col, Pagination, Spinner } from "react-bootstrap";
 import { useState } from "react";
 import ProductCard from "@/components/ProductCard";
 import ProductDetail from "@/components/ProductDetail";
 import SearchBar from "@/components/SearchBar";
+import ProductDetailById from "@/pages/product/[objectID]";
 
 export default function Product() {
+  const router = useRouter();
   const PER_PAGE = 8;
   const [page, setPage] = useState(1);
   const [show, setShow] = useState(false);
@@ -21,7 +24,9 @@ export default function Product() {
   function handleShow(e) {
     setShow(true);
     setClickedId(e.currentTarget.getAttribute("id"));
+    router.push(`/product/${e.currentTarget.getAttribute("id")}`);
   }
+
   function previousPage() {
     page > 1 && setPage(page - 1);
   }
@@ -74,11 +79,16 @@ export default function Product() {
           </Row>
 
           {/* Modal */}
-          <ProductDetail
-            id={clickedId}
-            show={show}
-            close={() => setShow(false)}
-          />
+          {show && (
+            <ProductDetailById
+              searchField={searchField}
+              setSearchField={setSearchField}
+              setPage={setPage}
+              // id={clickedId}
+              show={show}
+              // close={() => setShow(false)}
+            />
+          )}
         </>
       )}
     </>

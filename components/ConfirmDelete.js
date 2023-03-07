@@ -1,7 +1,9 @@
 import { Button, Modal } from "react-bootstrap";
+import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 
 export default function ConfirmDelete(props) {
+  const router = useRouter();
   async function del(target) {
     let url = `${process.env.NEXT_PUBLIC_API_URL}/${props.id}`;
 
@@ -13,15 +15,18 @@ export default function ConfirmDelete(props) {
       method: "DELETE",
     });
 
-    response.ok
-      ? toast.success("Deleted!", {
-          position: "top-center",
-          autoClose: 5000,
-        })
-      : toast.error("Delele Fail!", {
-          position: "top-center",
-          autoClose: 5000,
-        });
+    if (response.ok) {
+      toast.success("Deleted!", {
+        position: "top-center",
+        autoClose: 5000,
+      });
+      router.push("/");
+    } else {
+      toast.error("Delele Fail!", {
+        position: "top-center",
+        autoClose: 5000,
+      });
+    }
   }
 
   return (
