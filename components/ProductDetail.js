@@ -1,7 +1,14 @@
 import useSWR from "swr";
 import Error from "next/error";
-import { Modal, CloseButton, Tab, Tabs, Row, Col } from "react-bootstrap";
-import { Card } from "react-bootstrap";
+import {
+  Card,
+  CloseButton,
+  Tab,
+  Tabs,
+  Row,
+  Col,
+  Spinner,
+} from "react-bootstrap";
 import ProductInfo from "@/components/ProductInfo";
 import PriceHistory from "@/components/PriceHistory";
 import UpdatePrice from "@/components/UpdatePrice";
@@ -9,25 +16,20 @@ import UpdateProduct from "@/components/UpdateProduct";
 
 export default function ProductDetail(props) {
   const { data, error } = useSWR(
-    props.id ? `${process.env.NEXT_PUBLIC_API_URL}/${props.id}` : null
+    `${process.env.NEXT_PUBLIC_API_URL}/${props.id}`
   );
 
   if (error) {
     return <Error statusCode={404} />;
   }
-
   if (!data) {
-    return null;
+    return (
+      <div className="d-flex justify-content-center">
+        <Spinner animation="border" />
+      </div>
+    );
   }
-
   return (
-    // <Modal
-    //   size="lg"
-    //   show={props.show}
-    //   onHide={props.close}
-    //   aria-labelledby="contained-modal-title-vcenter"
-    //   centered
-    // >
     <Card>
       <Card.Header>
         <Row className="mt-2">
@@ -73,7 +75,6 @@ export default function ProductDetail(props) {
           </Card.Body>
         </Tab>
       </Tabs>
-      {/* </Modal> */}
     </Card>
   );
 }

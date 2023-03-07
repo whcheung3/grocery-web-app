@@ -49,13 +49,12 @@ export default function ProductCard(props) {
       // Skeleton Screen
       <Card className="text-center h-100">
         <Card.Body>
-          <Skeleton height={150} width={150} />
-          <Skeleton height={25} width={100} />
+          <Skeleton className="mb-2" height={150} width={150} />
+          <Skeleton height={25} width={220} />
           <Skeleton height={15} width={80} />
           <hr />
-          <Skeleton height={15} width={70} />
-          <Skeleton height={15} width={100} />
-          <Skeleton height={15} width={60} />
+          <Skeleton height={15} width={140} />
+          <Skeleton height={15} width={120} />
         </Card.Body>
       </Card>
     );

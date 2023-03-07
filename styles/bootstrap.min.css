@@ -3574,7 +3574,7 @@ fieldset:disabled .btn {
 }
 .nav-tabs {
   background-color: var(--bs-card-cap-bg);
-  /* --bs-nav-tabs-border-width: 1px; */
+  --bs-nav-tabs-border-width: 1px;
   --bs-nav-tabs-border-color: #ecf0f1;
   --bs-nav-tabs-border-radius: 0.375rem;
   --bs-nav-tabs-link-hover-border-color: #ecf0f1 #ecf0f1 #ecf0f1;

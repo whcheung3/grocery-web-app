@@ -4,26 +4,20 @@ import { useRouter } from "next/router";
 import { Row, Col, Pagination, Spinner } from "react-bootstrap";
 import { useState } from "react";
 import ProductCard from "@/components/ProductCard";
-import ProductDetail from "@/components/ProductDetail";
 import SearchBar from "@/components/SearchBar";
-import ProductDetailById from "@/pages/product/[objectID]";
 
 export default function Product() {
   const router = useRouter();
   const PER_PAGE = 8;
   const [page, setPage] = useState(1);
-  const [show, setShow] = useState(false);
-  const [clickedId, setClickedId] = useState();
-  const [searchField, setSearchField] = useState("");
+  let q = router.asPath.split("?")[1];
   const { data, error } = useSWR(
-    searchField
-      ? `${process.env.NEXT_PUBLIC_API_URL}?page=${page}&perPage=${PER_PAGE}&q=${searchField}`
+    q
+      ? `${process.env.NEXT_PUBLIC_API_URL}?page=${page}&perPage=${PER_PAGE}&${q}`
       : `${process.env.NEXT_PUBLIC_API_URL}?page=${page}&perPage=${PER_PAGE}`
   );
 
   function handleShow(e) {
-    setShow(true);
-    setClickedId(e.currentTarget.getAttribute("id"));
     router.push(`/product/${e.currentTarget.getAttribute("id")}`);
   }
 
@@ -47,11 +41,7 @@ export default function Product() {
   return (
     <>
       {/* Search Bar */}
-      <SearchBar
-        searchField={searchField}
-        setSearchField={setSearchField}
-        setPage={setPage}
-      />
+      <SearchBar setPage={setPage} />
 
       {data.length == 0 ? (
         "No Results Found"
@@ -77,18 +67,6 @@ export default function Product() {
               </Pagination>
             </Col>
           </Row>
-
-          {/* Modal */}
-          {show && (
-            <ProductDetailById
-              searchField={searchField}
-              setSearchField={setSearchField}
-              setPage={setPage}
-              // id={clickedId}
-              show={show}
-              // close={() => setShow(false)}
-            />
-          )}
         </>
       )}
     </>
