@@ -2,20 +2,26 @@ import useSWR from "swr";
 import Error from "next/error";
 import { useRouter } from "next/router";
 import { Row, Col, Pagination, Spinner } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductCard from "@/components/ProductCard";
 import SearchBar from "@/components/SearchBar";
 
 export default function Product() {
   const router = useRouter();
+  const queryString = router.asPath.split("?")[1];
   const PER_PAGE = 8;
   const [page, setPage] = useState(1);
-  let q = router.asPath.split("?")[1];
+  const [searchField, setSearchField] = useState("");
   const { data, error } = useSWR(
-    q
-      ? `${process.env.NEXT_PUBLIC_API_URL}?page=${page}&perPage=${PER_PAGE}&${q}`
+    queryString
+      ? `${process.env.NEXT_PUBLIC_API_URL}?page=${page}&perPage=${PER_PAGE}&${queryString}`
       : `${process.env.NEXT_PUBLIC_API_URL}?page=${page}&perPage=${PER_PAGE}`
   );
+
+  useEffect(() => {
+    // for displaying the search query in search bar
+    if (queryString) setSearchField(decodeURI(queryString.slice(2)));
+  }, [queryString]);
 
   function handleShow(e) {
     router.push(`/product/${e.currentTarget.getAttribute("id")}`);
@@ -41,7 +47,11 @@ export default function Product() {
   return (
     <>
       {/* Search Bar */}
-      <SearchBar setPage={setPage} />
+      <SearchBar
+        searchField={searchField}
+        setSearchField={setSearchField}
+        setPage={setPage}
+      />
 
       {data.length == 0 ? (
         "No Results Found"
