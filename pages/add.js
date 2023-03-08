@@ -23,7 +23,8 @@ export default function AddProduct() {
     });
 
     if (data.pack) data.size *= data.pack; // sum up the total size of the product
-    data.category = data.category.replace(/\s*,\s*/gi, ",").split(","); // remove whitespace and make categories in an array
+    if (data.category)
+      data.category = data.category.replace(/\s*,\s*/gi, ",").split(","); // remove whitespace and make categories in an array
     data.history[0].valid_to += "T23:59:59Z"; // make date until day end
 
     if (image) {
