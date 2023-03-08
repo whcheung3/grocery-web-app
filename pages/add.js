@@ -246,6 +246,7 @@ export default function AddProduct() {
           <Form.Control
             {...register("history.0.valid_to")}
             type="date"
+            max="2099-12-31"
             required
           />
         </Form.Group>

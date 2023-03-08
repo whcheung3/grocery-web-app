@@ -75,7 +75,12 @@ export default function UpdatePrice(props) {
       <Row className="mb-3">
         <Form.Group as={Col} controlId="valid_to">
           <Form.Label>Valid Date</Form.Label>
-          <Form.Control {...register("valid_to")} type="date" required />
+          <Form.Control
+            {...register("valid_to")}
+            type="date"
+            max="2099-12-31"
+            required
+          />
         </Form.Group>
       </Row>
 
