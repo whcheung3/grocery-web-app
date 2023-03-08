@@ -5,11 +5,12 @@ import { Row, Col, Pagination, Spinner } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import ProductCard from "@/components/ProductCard";
 import SearchBar from "@/components/SearchBar";
+import { toast } from "react-toastify";
 
 export default function Product() {
   const router = useRouter();
   const queryString = router.asPath.split("?")[1];
-  const PER_PAGE = 8;
+  const PER_PAGE = 12;
   const [page, setPage] = useState(1);
   const [searchField, setSearchField] = useState("");
   const { data, error } = useSWR(
@@ -30,8 +31,14 @@ export default function Product() {
   function previousPage() {
     page > 1 && setPage(page - 1);
   }
+
   function nextPage() {
-    PER_PAGE == data.length && setPage(page + 1);
+    PER_PAGE == data.length
+      ? setPage(page + 1)
+      : toast.info("You have reached the end!", {
+          position: "top-center",
+          autoClose: 5000,
+        });
   }
 
   if (error) {
