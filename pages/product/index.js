@@ -68,15 +68,19 @@ export default function Product() {
 
           {/* Pagination */}
           <br />
-          <Row>
-            <Col>
-              <Pagination className="float-end">
-                <Pagination.Prev onClick={previousPage} />
-                <Pagination.Item>{page}</Pagination.Item>
-                <Pagination.Next onClick={nextPage} />
-              </Pagination>
-            </Col>
-          </Row>
+          {data.length != PER_PAGE && queryString ? (
+            ""
+          ) : (
+            <Row>
+              <Col>
+                <Pagination className="float-end">
+                  <Pagination.Prev onClick={previousPage} />
+                  <Pagination.Item>{page}</Pagination.Item>
+                  <Pagination.Next onClick={nextPage} />
+                </Pagination>
+              </Col>
+            </Row>
+          )}
         </>
       )}
     </>
