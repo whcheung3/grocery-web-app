@@ -71,6 +71,16 @@ export default function MainNav() {
                   </Nav.Link>
                 </Link>
 
+                <Link href="/product" passHref>
+                  <Nav.Link
+                    active={router.pathname === "/product"}
+                    disabled={router.pathname === "/product"}
+                    onClick={() => setIsExpanded(false)}
+                  >
+                    Lowest Price
+                  </Nav.Link>
+                </Link>
+
                 <Link href="/add" passHref>
                   <Nav.Link
                     active={router.pathname === "/add"}
