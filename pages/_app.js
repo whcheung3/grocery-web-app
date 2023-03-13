@@ -26,6 +26,13 @@ export default function App({ Component, pageProps }) {
         <meta name="theme-color" content="#000000" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="shortcut icon" href="/favicon.ico" />
+
+        <link
+          rel="preload"
+          href={`${process.env.NEXT_PUBLIC_API_URL}?page=1&perPage=12`}
+          as="fetch"
+          crossorigin="anonymous"
+        />
       </Head>
       <Layout>
         <SWRConfig

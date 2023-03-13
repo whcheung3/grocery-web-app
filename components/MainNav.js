@@ -31,7 +31,7 @@ export default function MainNav() {
             aria-controls="offcanvasNavbar-expand-md"
           />
           {/* act as refresh*/}
-          <Nav.Link href="/">
+          <Link href="/" passHref>
             <Navbar.Brand>
               <Image
                 alt="logo"
@@ -41,7 +41,7 @@ export default function MainNav() {
               />
               &nbsp;Grocery Price Tracker
             </Navbar.Brand>
-          </Nav.Link>
+          </Link>
           <Navbar.Offcanvas
             id="offcanvasNavbar-expand-md"
             aria-labelledby="offcanvasNavbarLabel-expand-md"
@@ -61,20 +61,9 @@ export default function MainNav() {
             </Offcanvas.Header>
             <Offcanvas.Body>
               <Nav className="me-auto  my-lg-0" style={{ maxHeight: "100px" }}>
-                <Link href="/" passHref>
-                  <Nav.Link
-                    active={router.pathname === "/"}
-                    disabled={router.pathname === "/"}
-                    onClick={() => setIsExpanded(false)}
-                  >
-                    Home
-                  </Nav.Link>
-                </Link>
-
                 <Link href="/product" passHref>
                   <Nav.Link
                     active={router.pathname === "/product"}
-                    disabled={router.pathname === "/product"}
                     onClick={() => setIsExpanded(false)}
                   >
                     Lowest Price
@@ -84,7 +73,6 @@ export default function MainNav() {
                 <Link href="/add" passHref>
                   <Nav.Link
                     active={router.pathname === "/add"}
-                    disabled={router.pathname === "/add"}
                     onClick={() => setIsExpanded(false)}
                   >
                     Add Product
@@ -94,7 +82,6 @@ export default function MainNav() {
                 <Link href="/calculator" passHref>
                   <Nav.Link
                     active={router.pathname === "/calculator"}
-                    disabled={router.pathname === "/calculator"}
                     onClick={() => setIsExpanded(false)}
                   >
                     Calculator
