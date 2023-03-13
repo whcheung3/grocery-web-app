@@ -50,7 +50,7 @@ export default function ProductCard(props) {
       <Card className="text-center h-100">
         <Card.Body>
           <Skeleton className="mb-2" height={150} width={150} />
-          <Skeleton height={25} width={220} />
+          <Skeleton className="mb-2" height={25} width={180} />
           <Skeleton height={15} width={80} />
           <hr />
           <Skeleton height={15} width={140} />
