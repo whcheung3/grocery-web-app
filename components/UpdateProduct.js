@@ -6,8 +6,9 @@ import { toast } from "react-toastify";
 import ConfirmDelete from "@/components/ConfirmDelete";
 
 export default function UpdateProduct(props) {
-  const [show, setShow] = useState(false);
   const router = useRouter();
+  const [show, setShow] = useState(false);
+  const [image, setImage] = useState(null);
   const {
     register,
     watch,
@@ -15,8 +16,8 @@ export default function UpdateProduct(props) {
     handleSubmit,
     formState: { isSubmitting },
   } = useForm();
-  // const [image, setImage] = useState(null);
   const isNoUpc = watch("noUpc");
+  const isNoImage = watch("noImage");
 
   async function onSubmit(data) {
     const loadingToast = toast.loading("Submitting...", {
@@ -32,29 +33,29 @@ export default function UpdateProduct(props) {
       if (!data[prop]) delete data[`${prop}`]; // delete empty property from object in order to update modified field only
     }
 
-    // if (image) {
-    //   // upload image to Cloudinary
-    //   const imageData = new FormData();
-    //   imageData.append("file", image);
-    //   imageData.append(
-    //     "upload_preset",
-    //     process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
-    //   );
+    if (image) {
+      // upload image to Cloudinary
+      const imageData = new FormData();
+      imageData.append("file", image);
+      imageData.append(
+        "upload_preset",
+        process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
+      );
 
-    //   await fetch(
-    //     `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
-    //     {
-    //       method: "POST",
-    //       body: imageData,
-    //     }
-    //   )
-    //     .then((response) => response.json())
-    //     .then((image) => {
-    //       data.image = "https" + image.url.slice(4);
-    //     }); // set product image url
-    // } else {
-    //   data.image = "";
-    // }
+      await fetch(
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+        {
+          method: "POST",
+          body: imageData,
+        }
+      )
+        .then((response) => response.json())
+        .then((image) => {
+          data.image = "https" + image.url.slice(4);
+        }); // set product image url
+    } else {
+      data.image = "";
+    }
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/${props.id}`,
@@ -105,7 +106,6 @@ export default function UpdateProduct(props) {
                 placeholder="e.g. 064947130213"
                 autoFocus
                 inputMode="numeric"
-                required
                 disabled={isNoUpc}
               />
             </Form.Group>
@@ -183,17 +183,23 @@ export default function UpdateProduct(props) {
             </Form.Group>
           </Row>
 
-          {/* <Row className="mb-3">
+          <Row className="mb-3">
             <Form.Group as={Col} controlId="image">
-              <Form.Label>Picture</Form.Label>
+              <Form.Label>Picture</Form.Label>{" "}
+              <Form.Check
+                {...register("noImage")}
+                label={"No Image?"}
+                onClick={() => setValue("image", "")}
+              />
               <Form.Control
                 {...register("image")}
                 type="file"
                 accept="image/png, image/jpeg, image/jpg"
                 onChange={(e) => setImage(e.target.files[0])}
+                disabled={isNoImage}
               />
             </Form.Group>
-          </Row> */}
+          </Row>
 
           <Row className="mb-3">
             <Col>
