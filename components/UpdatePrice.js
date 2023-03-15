@@ -24,7 +24,7 @@ export default function UpdatePrice(props) {
         position: "top-center",
         autoClose: 5000,
       });
-      router.push("/");
+      router.push("/product");
     } else {
       toast.error("Product Update Fail!", {
         position: "top-center",

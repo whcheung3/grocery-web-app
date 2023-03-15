@@ -10,16 +10,20 @@ export default function UpdateProduct(props) {
   const router = useRouter();
   const {
     register,
+    watch,
+    setValue,
     handleSubmit,
     formState: { isSubmitting },
   } = useForm();
   // const [image, setImage] = useState(null);
+  const isNoUpc = watch("noUpc");
 
   async function onSubmit(data) {
     const loadingToast = toast.loading("Submitting...", {
       position: "top-center",
     });
 
+    if (isNoUpc) data.upc = new String(); // empty the UPC string
     if (data.pack) data.size *= data.pack; // sum up the total size of the product
     if (data.category)
       data.category = data.category.replace(/\s*,\s*/gi, ",").split(","); // remove whitespace and make categories in an array
@@ -66,7 +70,7 @@ export default function UpdateProduct(props) {
         position: "top-center",
         autoClose: 5000,
       });
-      router.push("/");
+      router.push("/product");
     } else {
       toast.error("Product Update Fail!", {
         position: "top-center",
@@ -90,13 +94,19 @@ export default function UpdateProduct(props) {
           <Row className="mb-3">
             <Form.Group as={Col} controlId="upc">
               <Form.Label>Universal Product Code</Form.Label>
-
+              <Form.Check
+                {...register("noUpc")}
+                label={"No UPC?"}
+                onClick={() => setValue("upc", "")}
+              />
               <Form.Control
                 {...register("upc")}
                 pattern="^\d{12}$"
                 placeholder="e.g. 064947130213"
                 autoFocus
                 inputMode="numeric"
+                required
+                disabled={isNoUpc}
               />
             </Form.Group>
           </Row>

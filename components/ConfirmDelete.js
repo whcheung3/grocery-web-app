@@ -20,7 +20,7 @@ export default function ConfirmDelete(props) {
         position: "top-center",
         autoClose: 5000,
       });
-      router.push("/");
+      router.push("/product");
     } else {
       toast.error("Delele Fail!", {
         position: "top-center",

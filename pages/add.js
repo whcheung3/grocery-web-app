@@ -62,7 +62,7 @@ export default function AddProduct() {
         position: "top-center",
         autoClose: 5000,
       });
-      router.push("/");
+      router.push("/product");
     } else {
       toast.error("Product Add Fail!", {
         position: "top-center",
