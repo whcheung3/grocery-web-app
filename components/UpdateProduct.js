@@ -28,11 +28,6 @@ export default function UpdateProduct(props) {
     if (data.pack) data.size *= data.pack; // sum up the total size of the product
     if (data.category)
       data.category = data.category.replace(/\s*,\s*/gi, ",").split(","); // remove whitespace and make categories in an array
-
-    for (let prop in data) {
-      if (!data[prop]) delete data[`${prop}`]; // delete empty property from object in order to update modified field only
-    }
-
     if (image) {
       // upload image to Cloudinary
       const imageData = new FormData();
@@ -53,8 +48,14 @@ export default function UpdateProduct(props) {
         .then((image) => {
           data.image = "https" + image.url.slice(4);
         }); // set product image url
+    } else if (isNoImage) {
+      data.image = new String(); // empty the image URL string
     } else {
-      data.image = "";
+      data.image = ""; // make no changes
+    }
+
+    for (let prop in data) {
+      if (!data[prop]) delete data[`${prop}`]; // delete empty property from object in order to update modified field only
     }
 
     const response = await fetch(

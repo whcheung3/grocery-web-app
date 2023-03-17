@@ -79,6 +79,15 @@ export default function MainNav() {
                   </Nav.Link>
                 </Link>
 
+                <Link href="/search" passHref>
+                  <Nav.Link
+                    active={router.pathname === "/search"}
+                    onClick={() => setIsExpanded(false)}
+                  >
+                    Search
+                  </Nav.Link>
+                </Link>
+
                 <Link href="/calculator" passHref>
                   <Nav.Link
                     active={router.pathname === "/calculator"}
