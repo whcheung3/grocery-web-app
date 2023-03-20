@@ -1,11 +1,101 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Row, Col } from "react-bootstrap";
-import ConfirmDelete from "@/components/ConfirmDelete";
 import { toast } from "react-toastify";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Line } from "react-chartjs-2";
+import ConfirmDelete from "@/components/ConfirmDelete";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 export default function PriceHistory(props) {
   const [show, setShow] = useState(false);
   const [clickedHistoryId, setClickedHistoryId] = useState();
+  const [price, setPrice] = useState();
+  const [valid_to, setValid_to] = useState();
+
+  useEffect(() => {
+    let tempPrice = [];
+    let tempDate = [];
+    for (const history of props.data.history) {
+      tempPrice.push(history.price);
+      tempDate.push(
+        new Date(history.valid_to).toLocaleString("en-CA", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        })
+      );
+    }
+
+    setPrice(tempPrice);
+    setValid_to(tempDate);
+  }, [props.data]);
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            let label = context.dataset.label || "";
+
+            if (label) {
+              label += ": ";
+            }
+            if (context.parsed.y !== null) {
+              label += new Intl.NumberFormat("en-CA", {
+                style: "currency",
+                currency: "CAD",
+              }).format(context.parsed.y);
+            }
+            return label;
+          },
+        },
+      },
+    },
+    scales: {
+      y: {
+        ticks: {
+          // Include a dollar sign in the ticks
+          callback: function (value, index, ticks) {
+            return "$" + value.toFixed(2);
+          },
+        },
+      },
+    },
+  };
+
+  const chartdata = {
+    labels: valid_to,
+    datasets: [
+      {
+        label: props.data.name,
+        data: price,
+        tension: 0.1,
+        borderColor: "rgb(75, 192, 192)",
+      },
+    ],
+  };
 
   function perUnitSwitch(unit, size, price) {
     // keep the same unit for easier compare
@@ -38,6 +128,10 @@ export default function PriceHistory(props) {
         historyId={clickedHistoryId}
         target={"history"}
       />
+
+      {/* Line Chart */}
+      <Line options={options} data={chartdata} />
+      <br />
 
       {/* History */}
       {props.data?.history?.map((hist) => (
