@@ -15,8 +15,8 @@ export default function Product() {
   const [searchField, setSearchField] = useState("");
   const { data, error } = useSWR(
     queryString
-      ? `${process.env.NEXT_PUBLIC_API_URL}?page=${page}&perPage=${PER_PAGE}&${queryString}`
-      : `${process.env.NEXT_PUBLIC_API_URL}?page=${page}&perPage=${PER_PAGE}`
+      ? `${process.env.NEXT_PUBLIC_API_URL}/products?page=${page}&perPage=${PER_PAGE}&${queryString}`
+      : `${process.env.NEXT_PUBLIC_API_URL}/products?page=${page}&perPage=${PER_PAGE}`
   );
 
   useEffect(() => {

@@ -8,7 +8,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 export default function ProductCard(props) {
   const { data, error } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_URL}/${props.id}`
+    `${process.env.NEXT_PUBLIC_API_URL}/products/${props.id}`
   );
   const [lowestPrice, setLowestPrice] = useState(99999);
   const [lowestDate, setLowestDate] = useState();
@@ -17,15 +17,17 @@ export default function ProductCard(props) {
     // keep the same unit for easier compare
     switch (unit) {
       case "ml":
-        return ` ($${((price / size) * 100).toFixed(4)} / 100ml)`;
+        return ` ($${((price / size) * 100).toFixed(3)} / 100ml)`;
       case "g":
-        return ` ($${((price / size) * 100).toFixed(4)} / 100g)`;
+        return ` ($${((price / size) * 100).toFixed(3)} / 100g)`;
       case "kg":
-        return ` ($${(price / size / 10).toFixed(4)} / 100g)`;
+        return ` ($${(price / size / 10).toFixed(3)} / 100g)`;
       case "l":
-        return ` ($${(price / size / 10).toFixed(4)} / 100ml)`;
+        return ` ($${(price / size / 10).toFixed(3)} / 100ml)`;
+      case "sh":
+        return ` ($${((price / size) * 100).toFixed(3)} / 100sh)`;
       default:
-        return ` ($${(price / size).toFixed(4)} / ${unit})`;
+        return ` ($${(price / size).toFixed(3)} / ${unit})`;
     }
   }
 
@@ -61,7 +63,7 @@ export default function ProductCard(props) {
   }
 
   return (
-    <Card className="text-center h-100">
+    <Card className="text-center h-100 shadow">
       <Card.Body>
         <Image
           src={data?.image ? data?.image : `https://via.placeholder.com/150`}
@@ -77,7 +79,6 @@ export default function ProductCard(props) {
         </Card.Text>
 
         {/* Lowest Price History */}
-        <hr />
         <Card.Text>
           {"Lowest: " +
             new Date(lowestDate).toLocaleDateString("en-CA", {

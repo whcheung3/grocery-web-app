@@ -16,7 +16,7 @@ import UpdateProduct from "@/components/UpdateProduct";
 
 export default function ProductDetail(props) {
   const { data, error } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_URL}/${props.id}`
+    `${process.env.NEXT_PUBLIC_API_URL}/products/${props.id}`
   );
 
   if (error) {
@@ -30,7 +30,7 @@ export default function ProductDetail(props) {
     );
   }
   return (
-    <Card>
+    <Card className="shadow-lg">
       <Card.Header>
         <Row className="mt-2">
           <Col>

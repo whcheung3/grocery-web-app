@@ -80,9 +80,14 @@ export default function Calculator() {
                 Select Unit
               </option>
               <option value="ea">ea</option>
+              <option value="pc">pc</option>
               <option value="g">g</option>
+              <option value="kg">kg</option>
               <option value="lb">lb</option>
               <option value="ml">ml</option>
+              <option value="l">l</option>
+              <option value="oz">oz</option>
+              <option value="sh">sh</option>
             </Form.Select>
           </Col>
         </Form.Group>

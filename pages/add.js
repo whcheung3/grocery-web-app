@@ -51,11 +51,14 @@ export default function AddProduct() {
       data.image = "";
     }
 
-    const response = await fetch(process.env.NEXT_PUBLIC_API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    }).then(toast.dismiss(loadingToast));
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/products`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      }
+    ).then(toast.dismiss(loadingToast));
 
     if (response.ok) {
       toast.success("New Product Added!", {
@@ -158,6 +161,7 @@ export default function AddProduct() {
             <option value="ml">ml</option>
             <option value="l">l</option>
             <option value="oz">oz</option>
+            <option value="sh">sh</option>
           </Form.Select>
         </Form.Group>
 
@@ -212,7 +216,7 @@ export default function AddProduct() {
             <optgroup label="Western Supermarket">
               <option value="Costco">Costco</option>
               <option value="Food Basics">Food Basics</option>
-              <option value="FreshCO">FreshCO</option>
+              <option value="FreshCo">FreshCo</option>
               <option value="Loblaws">Loblaws</option>
               <option value="Metro">Metro</option>
               <option value="No Frills">No Frills</option>

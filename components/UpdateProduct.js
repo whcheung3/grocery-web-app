@@ -59,7 +59,7 @@ export default function UpdateProduct(props) {
     }
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/${props.id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/products/${props.id}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -169,6 +169,7 @@ export default function UpdateProduct(props) {
                 <option value="ml">ml</option>
                 <option value="l">l</option>
                 <option value="oz">oz</option>
+                <option value="sh">sh</option>
               </Form.Select>
             </Form.Group>
 

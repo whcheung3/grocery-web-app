@@ -11,7 +11,7 @@ export default function UpdatePrice(props) {
     data.valid_to += "T23:59:59Z"; // make date until day end
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/${props.id}/add`,
+      `${process.env.NEXT_PUBLIC_API_URL}/products/${props.id}/add`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -55,7 +55,7 @@ export default function UpdatePrice(props) {
             <optgroup label="Western Supermarket">
               <option value="Costco">Costco</option>
               <option value="Food Basics">Food Basics</option>
-              <option value="FreshCO">FreshCO</option>
+              <option value="FreshCo">FreshCo</option>
               <option value="Loblaws">Loblaws</option>
               <option value="Metro">Metro</option>
               <option value="No Frills">No Frills</option>

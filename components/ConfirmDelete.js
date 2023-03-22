@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 export default function ConfirmDelete(props) {
   const router = useRouter();
   async function del(target) {
-    let url = `${process.env.NEXT_PUBLIC_API_URL}/${props.id}`;
+    let url = `${process.env.NEXT_PUBLIC_API_URL}/products/${props.id}`;
 
     if (target == "history") {
       url += `/delete/${props.historyId}`;

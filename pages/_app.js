@@ -29,7 +29,7 @@ export default function App({ Component, pageProps }) {
 
         <link
           rel="preload"
-          href={`${process.env.NEXT_PUBLIC_API_URL}?page=1&perPage=12`}
+          href={`${process.env.NEXT_PUBLIC_API_URL}/products?page=1&perPage=12`}
           as="fetch"
           crossorigin="anonymous"
         />

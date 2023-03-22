@@ -45,13 +45,13 @@ export default function Home({ data }) {
             <div className="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
               <Link href="/product" passHref>
                 <button className="btn btn-primary btn-lg px-4 me-md-2 fw-bold">
-                  Get Started
+                  Browse All
                 </button>
               </Link>
 
-              <Link href="/calculator" passHref>
-                <button className="btn btn-outline-warning btn-lg px-4">
-                  Calculate
+              <Link href="/search" passHref>
+                <button className="btn btn-outline-success btn-lg px-4">
+                  Advanced Search
                 </button>
               </Link>
             </div>
@@ -73,7 +73,7 @@ export default function Home({ data }) {
       {/* Commonly Purchased Products: Egg / Milk / Bread */}
       <Container className="mt-5">
         <Row className="p-4 align-items-center rounded-3 border shadow-lg">
-          <h3 className="p-4 pb-0">Commonly Purchased Products:</h3>
+          <h3 className="p-4 pb-0">Commonly Purchased Products</h3>
           <Row xs={1} md={2} lg={4} className="g-4 mt-0">
             {data.eggData?.map((product) => (
               <Col key={product._id} id={product._id} onClick={handleShow}>
@@ -104,13 +104,20 @@ export default function Home({ data }) {
       {/* On Sale Offers */}
       <Container className="mt-5">
         <Row className="p-4 align-items-center rounded-3 border shadow-lg">
-          <h3 className="p-4 pb-0">On Sale Offers:</h3>
+          <h3 className="p-4 pb-0">On Sale Offers</h3>
           <Row xs={1} md={2} lg={4} className="g-4 mt-0">
             {data.onSaleData?.map((product) => (
               <Col key={product._id} id={product._id} onClick={handleShow}>
                 <ProductCard id={product._id} />
               </Col>
             ))}
+            <Col className="d-flex justify-content-center">
+              <Link href="/product" passHref>
+                <button className="btn btn-outline-secondary align-self-center">
+                  and more...
+                </button>
+              </Link>
+            </Col>
           </Row>
         </Row>
       </Container>
@@ -120,19 +127,19 @@ export default function Home({ data }) {
 
 export async function getStaticProps() {
   const eggData = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}?page=1&perPage=3&q=egg`
+    `${process.env.NEXT_PUBLIC_API_URL}/products?page=1&perPage=3&q=egg`
   ).then((res) => res.json());
 
   const breadData = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}?page=1&perPage=3&q=bread`
+    `${process.env.NEXT_PUBLIC_API_URL}/products?page=1&perPage=3&q=bread`
   ).then((res) => res.json());
 
   const milkData = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}?page=1&perPage=3&q=milk`
+    `${process.env.NEXT_PUBLIC_API_URL}/products?page=1&perPage=3&q=milk`
   ).then((res) => res.json());
 
   const onSaleData = [];
-  await fetch(`${process.env.NEXT_PUBLIC_API_URL}?page=1&perPage=6`)
+  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products?page=1&perPage=7`)
     .then((res) => res.json())
     .then((data) =>
       data.map((product) =>
