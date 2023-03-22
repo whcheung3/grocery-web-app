@@ -30,16 +30,15 @@ export default function MainNav() {
             }
             aria-controls="offcanvasNavbar-expand-md"
           />
-          {/* act as refresh*/}
           <Link href="/" passHref>
-            <Navbar.Brand>
+            <Navbar.Brand className="d-flex">
               <Image
                 alt="logo"
-                src="https://em-content.zobj.net/thumbs/120/apple/325/money-with-wings_1f4b8.png"
-                width={25}
-                height={25}
+                src="https://res.cloudinary.com/whcheung3/image/upload/v1679455835/logo/logo_pohwmr.png"
+                width={240}
+                height={30}
+                quality={100}
               />
-              &nbsp;Grocery Price Tracker
             </Navbar.Brand>
           </Link>
           <Navbar.Offcanvas
@@ -48,14 +47,17 @@ export default function MainNav() {
             placement="start"
           >
             <Offcanvas.Header>
-              <Offcanvas.Title id="offcanvasNavbarLabel-expand-md">
+              <Offcanvas.Title
+                className="d-flex"
+                id="offcanvasNavbarLabel-expand-md"
+              >
                 <Image
                   alt="logo"
-                  src="https://em-content.zobj.net/thumbs/120/apple/325/money-with-wings_1f4b8.png"
-                  width={25}
-                  height={25}
+                  src="https://res.cloudinary.com/whcheung3/image/upload/v1679456252/logo/logo_dark_urapbs.png"
+                  width={240}
+                  height={30}
+                  quality={100}
                 />
-                &nbsp;Grocery Price Tracker
               </Offcanvas.Title>
               <CloseButton onClick={() => setIsExpanded(false)} />
             </Offcanvas.Header>

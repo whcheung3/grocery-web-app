@@ -100,7 +100,7 @@ export default function PriceHistory(props) {
           text: "Price",
         },
         ticks: {
-          stepSize: 0.5,
+          stepSize: 0.2,
           callback: function (value, index, ticks) {
             return "$" + value.toFixed(2);
           },
