@@ -20,7 +20,7 @@ https://grocery-price-tracker.vercel.app/
 
 Deployed on Cyclic:
 
-https://grocery-web-api.cyclic.app/
+https://grocery-web-api.cyclic.app/api/v1
 
 ## Upcoming Features
 
