@@ -25,11 +25,8 @@ https://grocery-web-api.cyclic.app/
 ## Upcoming Features
 
 - Search keyword auto fill
-- Line graph
-- Security login
-- To buy list
+- User profile
 - Favorite stores & items
 - Search history
-- Image upload
 - Flyer / Web scraping
-- ...
+- Barcode Detector
