@@ -142,7 +142,7 @@ export async function getStaticProps() {
   await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products?page=1&perPage=7`)
     .then((res) => res.json())
     .then((data) =>
-      data.map((product) =>
+      data?.map((product) =>
         product.history.map(
           (history) =>
             new Date(history.valid_to) >= new Date() && onSaleData.push(product)

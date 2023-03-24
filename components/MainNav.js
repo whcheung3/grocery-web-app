@@ -38,6 +38,7 @@ export default function MainNav() {
                 width={240}
                 height={30}
                 quality={100}
+                priority
               />
             </Navbar.Brand>
           </Link>
