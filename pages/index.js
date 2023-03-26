@@ -159,5 +159,6 @@ export async function getStaticProps() {
         onSaleData,
       },
     },
+    revalidate: 10,
   };
 }
