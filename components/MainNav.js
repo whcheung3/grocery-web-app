@@ -30,18 +30,17 @@ export default function MainNav() {
             }
             aria-controls="offcanvasNavbar-expand-md"
           />
-          <Link href="/" passHref>
-            <Navbar.Brand className="d-flex">
-              <Image
-                alt="logo"
-                src="https://res.cloudinary.com/whcheung3/image/upload/v1679455835/logo/logo_pohwmr.png"
-                width={240}
-                height={30}
-                quality={100}
-                priority
-              />
-            </Navbar.Brand>
-          </Link>
+          <Navbar.Brand href="/" className="d-flex">
+            <Image
+              alt="logo"
+              src="https://res.cloudinary.com/whcheung3/image/upload/v1679455835/logo/logo_pohwmr.png"
+              width={240}
+              height={30}
+              quality={100}
+              priority
+            />
+          </Navbar.Brand>
+
           <Navbar.Offcanvas
             id="offcanvasNavbar-expand-md"
             aria-labelledby="offcanvasNavbarLabel-expand-md"

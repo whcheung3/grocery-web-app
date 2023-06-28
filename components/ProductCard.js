@@ -42,9 +42,9 @@ export default function ProductCard(props) {
     }
   }, [data, lowestPrice, lowestDate]);
 
-  if (error) {
-    return <Error statusCode={404} />;
-  }
+  // if (error) {
+  //   return <Error statusCode={404} />;
+  // }
 
   if (!data) {
     return (

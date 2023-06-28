@@ -127,7 +127,7 @@ export default function Home({ data }) {
 
 export async function getStaticProps() {
   const eggData = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/products?page=1&perPage=3&q=egg`
+    `${process.env.NEXT_PUBLIC_API_URL}/products?page=1&perPage=2&q=egg`
   ).then((res) => res.json());
 
   const breadData = await fetch(
@@ -135,7 +135,7 @@ export async function getStaticProps() {
   ).then((res) => res.json());
 
   const milkData = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/products?page=1&perPage=3&q=milk`
+    `${process.env.NEXT_PUBLIC_API_URL}/products?page=1&perPage=2&q=milk`
   ).then((res) => res.json());
 
   const onSaleData = [];
