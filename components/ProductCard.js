@@ -1,5 +1,6 @@
 import useSWR from "swr";
 import Error from "next/error";
+import { useRouter } from "next/router";
 import { Card } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import Image from "next/image";
@@ -7,11 +8,16 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 export default function ProductCard(props) {
+  const router = useRouter();
   const { data, error } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/products/${props.id}`
   );
   const [lowestPrice, setLowestPrice] = useState(99999);
   const [lowestDate, setLowestDate] = useState();
+
+  function handleShow() {
+    router.push(`/product/${props.id}`);
+  }
 
   function perUnitSwitch(unit, size, price) {
     // keep the same unit for easier compare
@@ -42,10 +48,6 @@ export default function ProductCard(props) {
     }
   }, [data, lowestPrice, lowestDate]);
 
-  // if (error) {
-  //   return <Error statusCode={404} />;
-  // }
-
   if (!data) {
     return (
       // Skeleton Screen
@@ -63,7 +65,7 @@ export default function ProductCard(props) {
   }
 
   return (
-    <Card className="text-center h-100 shadow">
+    <Card className="text-center h-100 shadow" onClick={handleShow}>
       <Card.Body>
         <Image
           src={data?.image ? data?.image : `https://via.placeholder.com/150`}

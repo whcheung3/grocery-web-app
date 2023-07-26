@@ -24,10 +24,6 @@ export default function Product() {
     if (queryString) setSearchField(decodeURI(queryString.slice(2)));
   }, [queryString]);
 
-  function handleShow(e) {
-    router.push(`/product/${e.currentTarget.getAttribute("id")}`);
-  }
-
   function previousPage() {
     page > 1 && setPage(page - 1);
   }
@@ -67,7 +63,7 @@ export default function Product() {
           {/* Card */}
           <Row xs={1} md={2} lg={4} className="g-4">
             {data?.map((product) => (
-              <Col key={product._id} id={product._id} onClick={handleShow}>
+              <Col key={product._id} id={product._id}>
                 <ProductCard id={product._id} />
               </Col>
             ))}
