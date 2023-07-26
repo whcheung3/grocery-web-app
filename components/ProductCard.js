@@ -51,7 +51,7 @@ export default function ProductCard(props) {
   if (!data) {
     return (
       // Skeleton Screen
-      <Card className="text-center h-100">
+      <Card className="text-center h-100 shadow">
         <Card.Body>
           <Skeleton className="mb-2" height={150} width={150} />
           <Skeleton className="mb-2" height={25} width={180} />

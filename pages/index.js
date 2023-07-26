@@ -1,19 +1,13 @@
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Spinner } from "react-bootstrap";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { useRouter } from "next/router";
 import SearchBar from "@/components/SearchBar";
 import ProductCard from "@/components/ProductCard";
 
 export default function Home({ data }) {
-  const router = useRouter();
   const [page, setPage] = useState(1);
   const [searchField, setSearchField] = useState("");
-
-  function handleShow(e) {
-    router.push(`/product/${e.currentTarget.getAttribute("id")}`);
-  }
 
   return (
     <>
@@ -24,7 +18,7 @@ export default function Home({ data }) {
             <h1 className="display-5fw-bold mb-5">
               Save money with
               <br />
-              Grocery Price Tracker
+              GroceryPriceTracker
             </h1>
 
             <p className="lead mb-5">
@@ -43,16 +37,14 @@ export default function Home({ data }) {
             />
 
             <div className="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
-              <Link href="/product" passHref>
-                <button className="btn btn-primary btn-lg px-4 me-md-2 fw-bold">
-                  Browse All
+              <Link href={`/product?q=${searchField}`} passHref>
+                <button className="btn btn-success btn-lg px-4 me-md-2">
+                  Start Saving!
                 </button>
               </Link>
 
-              <Link href="/search" passHref>
-                <button className="btn btn-outline-success btn-lg px-4">
-                  Advanced Search
-                </button>
+              <Link href="/product" passHref>
+                <button className="btn btn-info btn-lg px-4">Browse All</button>
               </Link>
             </div>
           </Col>
@@ -76,17 +68,17 @@ export default function Home({ data }) {
           <h3 className="p-4 pb-0">Commonly Purchased Products</h3>
           <Row xs={1} md={2} lg={4} className="g-4 mt-0">
             {data.eggData?.map((product) => (
-              <Col key={product._id} id={product._id} onClick={handleShow}>
+              <Col key={product._id} id={product._id}>
                 <ProductCard id={product._id} />
               </Col>
             ))}
             {data.milkData?.map((product) => (
-              <Col key={product._id} id={product._id} onClick={handleShow}>
+              <Col key={product._id} id={product._id}>
                 <ProductCard id={product._id} />
               </Col>
             ))}
             {data.breadData?.map((product) => (
-              <Col key={product._id} id={product._id} onClick={handleShow}>
+              <Col key={product._id} id={product._id}>
                 <ProductCard id={product._id} />
               </Col>
             ))}
@@ -107,7 +99,7 @@ export default function Home({ data }) {
           <h3 className="p-4 pb-0">On Sale Offers</h3>
           <Row xs={1} md={2} lg={4} className="g-4 mt-0">
             {data.onSaleData?.map((product) => (
-              <Col key={product._id} id={product._id} onClick={handleShow}>
+              <Col key={product._id} id={product._id}>
                 <ProductCard id={product._id} />
               </Col>
             ))}

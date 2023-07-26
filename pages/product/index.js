@@ -37,9 +37,6 @@ export default function Product() {
         });
   }
 
-  if (error) {
-    return <Error statusCode={404} />;
-  }
   if (!data) {
     return (
       <div className="d-flex justify-content-center">
