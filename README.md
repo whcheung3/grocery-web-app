@@ -1,4 +1,4 @@
-# [Current Working] Grocery Price Tracker
+# Grocery Price Tracker
 
 ## Project Overview
 
@@ -12,15 +12,11 @@ And this is my idea of monitoring and finding the lowest prices for groceries.
 
 ## APP
 
-Deployed on Vercel:
-
 https://grocery-price-tracker.vercel.app/
 
 ## API
 
-Deployed on Cyclic:
-
-https://grocery-web-api.cyclic.app/api/v1
+https://grocery-web-api.vercel.app/api/v1
 
 ## Upcoming Features
 
